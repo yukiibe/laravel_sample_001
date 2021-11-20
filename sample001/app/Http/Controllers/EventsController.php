@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Participation;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
-class ParticipationsController extends Controller
+class EventsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class ParticipationsController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create');
     }
 
     /**
@@ -35,32 +35,35 @@ class ParticipationsController extends Controller
      */
     public function store(Request $request)
     {
-        $participation = new Participation;
-        $participation->participant_id = $request->participant_id;
-        $participation->event_id = $request->event_id;
-        $participation->save();
+        $event = new Event;
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->place = $request->place;
+        $event->fee = $request->fee;
+        $event->published = $request->published;
+        $event->save();
 
-        return view('participations.created');
+        return view('events.created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Participation  $participation
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Participation $participation)
+    public function show(Event $event)
     {
-        //
+        return view('events.show', ['event' => $event]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Participation  $participation
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(Participation $participation)
+    public function edit(Event $event)
     {
         //
     }
@@ -69,10 +72,10 @@ class ParticipationsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Participation  $participation
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Participation $participation)
+    public function update(Request $request, Event $event)
     {
         //
     }
@@ -80,10 +83,10 @@ class ParticipationsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Participation  $participation
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Participation $participation)
+    public function destroy(Event $event)
     {
         //
     }
