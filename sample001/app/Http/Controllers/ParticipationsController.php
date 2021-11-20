@@ -35,7 +35,12 @@ class ParticipationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $participation = new Participation;
+        $participation->participant_id = $request->participant_id;
+        $participation->event_id = $request->event_id;
+        $participation->save();
+
+        return view('participations.created');
     }
 
     /**
