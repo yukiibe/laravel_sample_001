@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EventsController;
+use App\Http\Controllers\ParticipationsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +22,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/events/create',[EventsController::class, 'create'])->name('events.create');
+    Route::post('/events',[EventsController::class, 'store'])->name('events.store');
+    Route::get('/events/{event}',[EventsController::class, 'show'])->name('events.show');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/participations',[ParticipationsController::class, 'store'])->name('events.store');
+});
 
 require __DIR__.'/auth.php';

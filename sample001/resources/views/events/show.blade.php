@@ -4,7 +4,7 @@
   <form method="POST" action="/participations">
     @csrf
     参加者id
-    <input type="text" name="participant_id">
+    <input type="text" name="user_id">
     <br>
     <input type="hidden" name="id" value="{{ $event->id }}">
     <br>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Participation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ParticipationsController extends Controller
 {
@@ -36,7 +37,7 @@ class ParticipationsController extends Controller
     public function store(Request $request)
     {
         $participation = new Participation;
-        $participation->participant_id = $request->participant_id;
+        $participation->user_id = Auth::id();
         $participation->event_id = $request->event_id;
         $participation->save();
 

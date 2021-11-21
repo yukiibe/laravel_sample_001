@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
@@ -36,6 +37,7 @@ class EventsController extends Controller
     public function store(Request $request)
     {
         $event = new Event;
+        $event->user_id = Auth::id();
         $event->title = $request->title;
         $event->description = $request->description;
         $event->place = $request->place;
