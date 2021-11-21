@@ -15,11 +15,12 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false)->default('');
-            $table->string('description')->nullable(false)->default('');
-            $table->string('place')->nullable(false)->default('');
-            $table->string('fee')->nullable()->default(null);
-            $table->boolean('published')->nullable(false)->default(0);
+            $table->foreignId('user_id');
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->string('place')->nullable();
+            $table->string('fee')->nullable();
+            $table->boolean('published')->default(0);
             $table->timestamps();
         });
     }

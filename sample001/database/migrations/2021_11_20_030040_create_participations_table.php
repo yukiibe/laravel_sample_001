@@ -15,8 +15,8 @@ class CreateParticipationsTable extends Migration
     {
         Schema::create('participations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('participant_id')->nullable(false);
-            $table->foreignId('event_id')->nullable(false);
+            $table->foreignId('user_id');
+            $table->foreignId('event_id');
             $table->timestamps();
         });
     }
