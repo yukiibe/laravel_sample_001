@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EventsController;
-use App\Http\Controllers\ParticipationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('events', EventsController::class);
-Route::resource('participations', ParticipationsController::class);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
