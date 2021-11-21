@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::post('/participations',[ParticipationsController::class, 'store'])->name('events.store');
+    Route::post('/participations',[ParticipationsController::class, 'store'])->name('participations.store');
 });
 
 require __DIR__.'/auth.php';
