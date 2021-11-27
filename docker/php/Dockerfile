@@ -19,6 +19,4 @@ RUN chmod +x /usr/local/bin/install-php-extensions \
 
 # app files
 COPY --chown=www-data:www-data ../../src ${APP_DIR}
-RUN chmod -R 755 ${APP_DIR}/storage
-RUN chmod -R 755 ${APP_DIR}/storage/logs
-RUN chmod -R 755 ${APP_DIR}/storage/logs/laravel.log
+RUN chmod -R 777 ${APP_DIR}/
