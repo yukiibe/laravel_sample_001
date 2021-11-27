@@ -49,9 +49,9 @@
             <div class="mt-4">
                 <x-label for="role" :value="__('Role')" />
 
-                <input type="radio" name="role" value="1" @if(old('role') == 1)) checked @endif required /> イベント参加者
+                <input type="radio" name="role" value="1" @if(old('role') == 1)) checked @endif required /> イベント参加者（Participant）
                 <br>
-                <input type="radio" name="role" value="2" @if(old('role') == 2)) checked @endif required /> イベント主催者
+                <input type="radio" name="role" value="2" @if(old('role') == 2)) checked @endif required /> イベント主催者（Organizer）
             </div>
 
             <div class="flex items-center justify-end mt-4">
