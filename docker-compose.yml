@@ -29,9 +29,9 @@ services:
       MYSQL_USER: dev
       MYSQL_PASSWORD: dev
       TZ: 'Asia/Tokyo'
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./docker/db/:/etc/mysql/conf.d/
     ports:
       - 3306:3306
 
