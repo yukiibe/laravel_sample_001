@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/participations',[ParticipationsController::class, 'index'])->name('participations.index');
     Route::post('/participations',[ParticipationsController::class, 'store'])->name('participations.store');
 });
 

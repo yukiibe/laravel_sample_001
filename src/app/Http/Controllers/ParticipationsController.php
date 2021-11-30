@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participation;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,9 @@ class ParticipationsController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::all()->find(Auth::id());
+
+        return view('participations.index', ['user' => $user]);
     }
 
     /**
