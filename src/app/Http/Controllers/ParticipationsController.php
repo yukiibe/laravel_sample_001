@@ -18,7 +18,10 @@ class ParticipationsController extends Controller
     {
         $user = User::all()->find(Auth::id());
 
-        return view('participations.index', ['user' => $user]);
+        return view('participations.index', [
+            'user' => $user,
+            'title' => '予約一覧'
+        ]);
     }
 
     /**
