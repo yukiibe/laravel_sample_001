@@ -45,4 +45,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the participations for the user
+     * 
+     * @return \App\Models\Participation  $participation
+     */
+    public function participations()
+    {
+        return $this->hasMany(Participation::class);
+    }
+
+    /**
+     * Get the events for the user
+     * 
+     * @return \App\Models\Event  $event
+     */
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

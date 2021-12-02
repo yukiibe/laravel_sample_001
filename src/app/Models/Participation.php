@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Participation extends Model
 {
     use HasFactory;
+
+    /**
+     * Get the event for the participation
+     * 
+     * @return \App\Models\Event  $event
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }
