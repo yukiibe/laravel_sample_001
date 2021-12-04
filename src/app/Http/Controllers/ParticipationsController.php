@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Participation;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,8 +43,13 @@ class ParticipationsController extends Controller
      */
     public function store(Request $request)
     {
+        // Get the organizer by the requested event id
+        $event = Event::all()->find($request->event_id);
+        $organizer = User::all()->find($event->user_id);
+
         $participation = new Participation;
-        $participation->user_id = Auth::id();
+        $participation->participant_id = Auth::id();
+        $participation->organizer_id = $organizer->id;
         $participation->event_id = $request->event_id;
         $participation->save();
 
