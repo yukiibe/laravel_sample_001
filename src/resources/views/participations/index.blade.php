@@ -33,12 +33,12 @@
           nav
         >
           <v-list-item-group>
-            <v-list-item>
+            <v-list-item href="/participations">
               <v-list-item-icon>
                 <v-icon>mdi-view-list</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{ $title }}</v-list-item-title>
+                <v-list-item-title>予約一覧</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
