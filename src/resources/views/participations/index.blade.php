@@ -9,68 +9,12 @@
 <body>
   <div id="app">
     <v-app>
+
       <!-- Navigation Drawer -->
-      <v-navigation-drawer app>
-        <v-list>
-          <v-list-item>
-            <v-list-item-avatar>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-avatar>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ $user->name }}
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ $user->email }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list
-          nav
-        >
-          <v-list-item-group>
-            <v-list-item href="/participations">
-              <v-list-item-icon>
-                <v-icon>mdi-view-list</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>予約一覧</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>mdi-calendar</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>イベント一覧</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
+      <x-navigation-drawer :user="$user"/>
 
       <!-- App Bar -->
-      <v-app-bar app>
-        <v-toolbar-title>{{ $title }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-view-dashboard</v-icon>
-        </v-btn>
-        <v-btn
-          icon
-          @click="logout()"
-        >
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
-        <v-switch
-          v-model="$vuetify.theme.dark"
-          label="Vuetify Theme Dark"
-        ></v-switch>
-      </v-app-bar>
+      <x-app-bar title="予約一覧"/>
 
       <!-- Content -->
       <v-main>
@@ -80,7 +24,7 @@
         <template>
             <v-data-table
               v-model="selected"
-              :headers="headers"
+              :headers="headersForOrganizer"
               :items="{{ $user->participationsForOrganizer }}"
               :single-select="singleSelect"
               item-key="id"
@@ -122,8 +66,8 @@
       </v-main>
 
       <!-- Footer -->
-      <v-footer app>
-      </v-footer>
+      <x-footer/>
+
     </v-app>
   </div>
 
@@ -139,7 +83,7 @@
         return {
           singleSelect: false,
           selected: [],
-          headers: [
+          headersForOrganizer: [
             {
               text: '予約ID',
               align: 'start',
