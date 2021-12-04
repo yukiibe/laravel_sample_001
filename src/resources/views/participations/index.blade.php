@@ -80,7 +80,7 @@
               :headers="headers"
               :items="{{ $user->participationsForOrganizer }}"
               :single-select="singleSelect"
-              item-key="name"
+              item-key="id"
               show-select
               class="elevation-1"
             >
