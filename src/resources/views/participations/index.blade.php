@@ -5,6 +5,7 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
 </head>
 <body>
   <div id="app">
@@ -60,7 +61,10 @@
         <v-btn icon>
           <v-icon>mdi-view-dashboard</v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn
+          icon
+          @click="logout()"
+        >
           <v-icon>mdi-logout</v-icon>
         </v-btn>
         <v-switch
@@ -126,6 +130,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     new Vue({
       el: '#app',
@@ -154,6 +159,15 @@
             },
             { text: 'イベントID', value: 'event_id' },
           ],
+        }
+      },
+
+      methods: {
+        async logout () {
+          await axios.post('/logout', {
+            _token: "{{ csrf_token() }}"
+          })
+          location.reload()
         }
       },
 
