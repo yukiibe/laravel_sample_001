@@ -94,6 +94,25 @@
             </v-data-table>
           </template>
 @elseif ($user->role === 'participant')
+        <template>
+            <v-data-table
+              v-model="selected"
+              :headers="headersForParticipant"
+              :items="{{ $user->participationsForParticipant }}"
+              :single-select="singleSelect"
+              item-key="id"
+              show-select
+              class="elevation-1"
+            >
+              <template v-slot:top>
+                <v-switch
+                  v-model="singleSelect"
+                  label="Single select"
+                  class="pa-3"
+                ></v-switch>
+              </template>
+            </v-data-table>
+          </template>
 @endif
 
         </v-container>
@@ -126,31 +145,14 @@
             { text: '参加者ID', value: 'participant_id' },
             { text: 'イベントID', value: 'event_id' },
           ],
-          desserts: [
+          headersForParticipant: [
             {
-              name: 'Frozen Yogurt',
-              calories: 159,
-              fat: 6.0,
-              carbs: 24,
-              protein: 4.0,
-              iron: '1%',
+              text: '予約ID',
+              align: 'start',
+              sortable: false,
+              value: 'id',
             },
-            {
-              name: 'Ice cream sandwich',
-              calories: 237,
-              fat: 9.0,
-              carbs: 37,
-              protein: 4.3,
-              iron: '1%',
-            },
-            {
-              name: 'Eclair',
-              calories: 262,
-              fat: 16.0,
-              carbs: 23,
-              protein: 6.0,
-              iron: '7%',
-            },
+            { text: 'イベントID', value: 'event_id' },
           ],
         }
       },
