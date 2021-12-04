@@ -72,11 +72,13 @@
       <!-- Content -->
       <v-main>
         <v-container fluid>
-          <template>
+
+@if ($user->role === 'organizer')
+        <template>
             <v-data-table
               v-model="selected"
               :headers="headers"
-              :items="desserts"
+              :items="{{ $user->participationsForOrganizer }}"
               :single-select="singleSelect"
               item-key="name"
               show-select
@@ -91,6 +93,8 @@
               </template>
             </v-data-table>
           </template>
+@elseif ($user->role === 'participant')
+@endif
 
         </v-container>
       </v-main>
@@ -114,16 +118,13 @@
           selected: [],
           headers: [
             {
-              text: 'Dessert (100g serving)',
+              text: '予約ID',
               align: 'start',
               sortable: false,
-              value: 'name',
+              value: 'id',
             },
-            { text: 'Calories', value: 'calories' },
-            { text: 'Fat (g)', value: 'fat' },
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            { text: 'Iron (%)', value: 'iron' },
+            { text: '参加者ID', value: 'participant_id' },
+            { text: 'イベントID', value: 'event_id' },
           ],
           desserts: [
             {
