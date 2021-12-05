@@ -21,7 +21,7 @@
         <v-container fluid>
 
 @if ($user->role === 'organizer')
-        <template>
+          <template>
             <v-data-table
               v-model="selected"
               :headers="headersForOrganizer"
@@ -41,7 +41,7 @@
             </v-data-table>
           </template>
 @elseif ($user->role === 'participant')
-        <template>
+          <template>
             <v-data-table
               v-model="selected"
               :headers="headersForParticipant"
