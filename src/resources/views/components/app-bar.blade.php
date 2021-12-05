@@ -1,5 +1,5 @@
 <div>
-  <v-app-bar app>
+  <v-app-bar app dark>
     <v-toolbar-title>{{ $title }}</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon>
