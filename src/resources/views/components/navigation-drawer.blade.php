@@ -1,5 +1,5 @@
 <div>
-  <v-navigation-drawer app>
+  <v-navigation-drawer app dark>
     <v-list>
       <v-list-item>
         <v-list-item-avatar>
@@ -28,7 +28,7 @@
             <v-list-item-title>予約一覧</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
+        <v-list-item href="/events">
           <v-list-item-icon>
             <v-icon>mdi-calendar</v-icon>
           </v-list-item-icon>
