@@ -25,7 +25,7 @@
             <v-icon>mdi-view-list</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>予約一覧</v-list-item-title>
+            <v-list-item-title>Participations</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item href="/events">
@@ -33,7 +33,7 @@
             <v-icon>mdi-calendar</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>イベント一覧</v-list-item-title>
+            <v-list-item-title>Events</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>

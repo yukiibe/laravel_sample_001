@@ -14,7 +14,7 @@
       <x-navigation-drawer :user="$user"/>
 
       <!-- App Bar -->
-      <x-app-bar title="予約一覧"/>
+      <x-app-bar title="Participations"/>
 
       <!-- Content -->
       <v-main>
@@ -85,22 +85,22 @@
           selected: [],
           headersForOrganizer: [
             {
-              text: '予約ID',
+              text: 'ID',
               align: 'start',
               sortable: false,
               value: 'id',
             },
-            { text: '参加者ID', value: 'participant_id' },
-            { text: 'イベントID', value: 'event_id' },
+            { text: 'Participant ID', value: 'participant_id' },
+            { text: 'Event ID', value: 'event_id' },
           ],
           headersForParticipant: [
             {
-              text: '予約ID',
+              text: 'ID',
               align: 'start',
               sortable: false,
               value: 'id',
             },
-            { text: 'イベントID', value: 'event_id' },
+            { text: 'Event ID', value: 'event_id' },
           ],
         }
       },

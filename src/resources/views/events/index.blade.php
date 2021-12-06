@@ -14,7 +14,7 @@
       <x-navigation-drawer :user="$user"/>
 
       <!-- App Bar -->
-      <x-app-bar title="イベント一覧"/>
+      <x-app-bar title="Events"/>
 
       <!-- Content -->
       <v-main>
@@ -85,27 +85,27 @@
           selected: [],
           headersForOrganizer: [
             {
-              text: 'イベントID',
+              text: 'ID',
               align: 'start',
               sortable: false,
               value: 'id',
             },
-            { text: 'タイトル', value: 'title' },
-            { text: '開催場所', value: 'place' },
-            { text: '費用', value: 'fee' },
-            { text: '公開状態', value: 'published' },
+            { text: 'Title', value: 'title' },
+            { text: 'Place', value: 'place' },
+            { text: 'Fee', value: 'fee' },
+            { text: 'Published', value: 'published' },
           ],
           headersForParticipant: [
             {
-              text: 'イベントID',
+              text: 'ID',
               align: 'start',
               sortable: false,
               value: 'id',
             },
-            { text: 'タイトル', value: 'title' },
-            { text: '開催場所', value: 'place' },
-            { text: '費用', value: 'fee' },
-            { text: '公開状態', value: 'published' },
+            { text: 'Title', value: 'title' },
+            { text: 'Place', value: 'place' },
+            { text: 'Fee', value: 'fee' },
+            { text: 'Published', value: 'published' },
           ],
         }
       },
