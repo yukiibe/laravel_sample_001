@@ -32,7 +32,11 @@ class EventsController extends Controller
      */
     public function create()
     {
-        return view('events.create');
+        $user = User::all()->find(Auth::id());
+
+        return view('events.create', [
+            'user' => $user
+        ]);
     }
 
     /**

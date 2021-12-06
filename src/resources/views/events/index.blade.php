@@ -20,6 +20,17 @@
       <v-main>
         <v-container fluid>
 
+          <template>
+            <v-btn
+              class="ma-2"
+              style="text-transform: none"
+              color="success"
+              href="/events/create"
+            >
+              New Event
+            </v-btn>
+          </template>
+
 @if ($user->role === 'organizer')
           <template>
             <v-data-table
