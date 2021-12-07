@@ -110,6 +110,7 @@
               <v-btn
                 class="mr-4"
                 style="text-transform: none"
+                color="success"
                 type="submit"
               >
                 Create New Event
