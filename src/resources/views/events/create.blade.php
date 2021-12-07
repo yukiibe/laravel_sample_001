@@ -21,7 +21,8 @@
         <v-container fluid>
 
           <template>
-            <v-form>
+            <v-form method="post" action="/events">
+              @csrf
               <!-- Event Title -->
               <v-row>
                 <v-col
@@ -31,7 +32,8 @@
                   <v-text-field
                     label="Title"
                     outlined
-                    v-model="title"
+                    type="text"
+                    name="title"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -46,7 +48,8 @@
                     outlined
                     rows="4"
                     row-height="30"
-                    v-model="description"
+                    type="textarea"
+                    name="description"
                   ></v-textarea>
                 </v-col>
               </v-row>
@@ -59,7 +62,8 @@
                   <v-text-field
                     label="Place"
                     outlined
-                    v-model="place"
+                    type="text"
+                    name="place"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -72,7 +76,8 @@
                   <v-text-field
                     label="Fee"
                     outlined
-                    v-model="fee"
+                    type="text"
+                    name="fee"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -88,10 +93,14 @@
                   >
                     <v-radio
                       label="Unpublish"
+                      type="radio"
+                      name="published"
                       value="0"
                     ></v-radio>
                     <v-radio
                       label="Publish"
+                      type="radio"
+                      name="published"
                       value="1"
                     ></v-radio>
                   </v-radio-group>
@@ -101,7 +110,7 @@
               <v-btn
                 class="mr-4"
                 style="text-transform: none"
-                @click="submit"
+                type="submit"
               >
                 Create New Event
               </v-btn>

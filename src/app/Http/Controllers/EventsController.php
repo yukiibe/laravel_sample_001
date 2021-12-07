@@ -56,7 +56,13 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        return view('events.created');
+        $user = User::all()->find(Auth::id());
+        $events = Event::all();
+
+        return view('events.index', [
+            'user' => $user,
+            'events' => $events
+        ]);
     }
 
     /**
