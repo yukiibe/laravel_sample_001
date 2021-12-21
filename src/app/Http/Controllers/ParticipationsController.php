@@ -17,7 +17,7 @@ class ParticipationsController extends Controller
      */
     public function index()
     {
-        $user = User::all()->find(Auth::id());
+        $user = User::find(Auth::id());
 
         return view('participations.index', [
             'user' => $user
@@ -43,8 +43,8 @@ class ParticipationsController extends Controller
     public function store(Request $request)
     {
         // Get the organizer by the requested event id
-        $event = Event::all()->find($request->event_id);
-        $organizer = User::all()->find($event->user_id);
+        $event = Event::find($request->event_id);
+        $organizer = User::find($event->user_id);
 
         $participation = new Participation;
         $participation->participant_id = Auth::id();

@@ -49,6 +49,18 @@
                   class="pa-3"
                 ></v-switch>
               </template>
+              <template v-slot:item.published="{ item }">
+                <td v-if="item.published">
+                  公開する
+                </td>
+                <td v-else>
+                  公開しない
+                </td>
+              </template>
+              <template v-slot:item.actions="{ item }">
+                <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+                <v-icon small class="mr-2" @click="deleteItem(item)">mdi-delete</v-icon>
+              </template>
             </v-data-table>
           </template>
 @elseif ($user->role === 'participant')
@@ -105,6 +117,7 @@
             { text: 'Place', value: 'place' },
             { text: 'Fee', value: 'fee' },
             { text: 'Published', value: 'published' },
+            { text: 'Operation', value: 'actions' },
           ],
           headersForParticipant: [
             {
@@ -116,7 +129,6 @@
             { text: 'Title', value: 'title' },
             { text: 'Place', value: 'place' },
             { text: 'Fee', value: 'fee' },
-            { text: 'Published', value: 'published' },
           ],
         }
       },
@@ -126,8 +138,19 @@
           await axios.post('/logout', {
             _token: "{{ csrf_token() }}"
           })
-          location.reload()
-        }
+          .then(function (response) {
+            location.reload()
+          })
+        },
+        editItem (item) {
+          location.href = '/events/' + item.id + '/edit'
+        },
+        async deleteItem (item) {
+          await axios.delete('/events/' + item.id)
+            .then(function (response) {
+              location.reload()
+            })
+        },
       },
 
     })

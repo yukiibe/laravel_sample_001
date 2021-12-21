@@ -16,7 +16,7 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $user = User::all()->find(Auth::id());
+        $user = User::find(Auth::id());
         $events = Event::all();
 
         return view('events.index', [
@@ -32,7 +32,7 @@ class EventsController extends Controller
      */
     public function create()
     {
-        $user = User::all()->find(Auth::id());
+        $user = User::find(Auth::id());
 
         return view('events.create', [
             'user' => $user
@@ -56,7 +56,7 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        $user = User::all()->find(Auth::id());
+        $user = User::find(Auth::id());
         $events = Event::all();
 
         return view('events.index', [
@@ -107,6 +107,7 @@ class EventsController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event = Event::find($event->id);
+        $event->delete();
     }
 }

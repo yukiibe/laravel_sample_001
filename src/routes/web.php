@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/events/create',[EventsController::class, 'create'])->name('events.create');
     Route::post('/events',[EventsController::class, 'store'])->name('events.store');
     Route::get('/events/{event}',[EventsController::class, 'show'])->name('events.show');
+    Route::get('/events/{event}/edit',[EventsController::class, 'edit'])->name('events.edit');
+    Route::delete('/events/{event}',[EventsController::class, 'destroy'])->name('events.destroy');
 });
 
 Route::group(['middleware' => ['auth']], function () {
