@@ -21,7 +21,7 @@
         <v-container fluid>
 
           <template>
-            <v-form method="post" action="/events">
+            <v-form method="POST" action="/events">
               @csrf
               <!-- Event Title -->
               <v-row>

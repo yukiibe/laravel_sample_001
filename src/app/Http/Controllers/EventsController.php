@@ -84,7 +84,12 @@ class EventsController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $user = User::find(Auth::id());
+
+        return view('events.edit', [
+            'user' => $user,
+            'event' => $event
+        ]);
     }
 
     /**
@@ -96,7 +101,20 @@ class EventsController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->place = $request->place;
+        $event->fee = $request->fee;
+        $event->published = $request->published;
+        $event->save();
+
+        $user = User::find(Auth::id());
+        $events = Event::all();
+
+        return view('events.index', [
+            'user' => $user,
+            'events' => $events
+        ]);
     }
 
     /**
@@ -107,7 +125,6 @@ class EventsController extends Controller
      */
     public function destroy(Event $event)
     {
-        $event = Event::find($event->id);
         $event->delete();
     }
 }
