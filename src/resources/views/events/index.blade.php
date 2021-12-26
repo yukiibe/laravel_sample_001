@@ -94,6 +94,17 @@
                   class="pa-3"
                 ></v-switch>
               </template>
+              <template v-slot:item.show="{ item }">
+                <td>
+                  <v-btn
+                    color="blue-grey"
+                    class="ma-2 white--text"
+                    @click="showItem(item)"
+                  >
+                    Show
+                  </v-btn>
+                </td>
+              </template>
             </v-data-table>
           </template>
 @endif
@@ -143,6 +154,7 @@
             { text: 'Title', value: 'title' },
             { text: 'Place', value: 'place' },
             { text: 'Fee', value: 'fee' },
+            { text: 'Show', value: 'show' },
           ],
         }
       },
