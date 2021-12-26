@@ -51,15 +51,28 @@
               </template>
               <template v-slot:item.published="{ item }">
                 <td v-if="item.published">
-                  公開する
+                  Published
                 </td>
                 <td v-else>
-                  公開しない
+                  Not Published
+                </td>
+              </template>
+              <template v-slot:item.show="{ item }">
+                <td>
+                  <v-btn
+                    color="blue-grey"
+                    class="ma-2 white--text"
+                    @click="showItem(item)"
+                  >
+                    Show
+                  </v-btn>
                 </td>
               </template>
               <template v-slot:item.actions="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                <v-icon small class="mr-2" @click="deleteItem(item)">mdi-delete</v-icon>
+                <td>
+                  <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+                  <v-icon small class="mr-2" @click="deleteItem(item)">mdi-delete</v-icon>
+                </td>
               </template>
             </v-data-table>
           </template>
@@ -117,7 +130,8 @@
             { text: 'Place', value: 'place' },
             { text: 'Fee', value: 'fee' },
             { text: 'Published', value: 'published' },
-            { text: 'Operation', value: 'actions' },
+            { text: 'Show', value: 'show' },
+            { text: 'Actions', value: 'actions' },
           ],
           headersForParticipant: [
             {
@@ -141,6 +155,9 @@
           .then(function (response) {
             location.reload()
           })
+        },
+        showItem (item) {
+          location.href = '/events/' + item.id
         },
         editItem (item) {
           location.href = '/events/' + item.id + '/edit'

@@ -73,7 +73,12 @@ class EventsController extends Controller
      */
     public function show(Event $event)
     {
-        return view('events.show', ['event' => $event]);
+        $user = User::find(Auth::id());
+
+        return view('events.show', [
+            'user' => $user,
+            'event' => $event
+        ]);
     }
 
     /**
