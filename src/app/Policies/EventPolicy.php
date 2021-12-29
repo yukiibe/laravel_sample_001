@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Log;
 
 class EventPolicy
 {
@@ -18,10 +19,15 @@ class EventPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->role == 'participant') {
-          return true;
-        } else if ($user->role == 'organizer') {
-          return $user->id == $event->user_id;
+        if ($user->role == 'organizer') {
+            $event = Event::where('user_id', $user->id)->first();
+            if ($event) {
+                return $event->user_id == $user->id;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
         }
     }
 

@@ -31,12 +31,11 @@
             </v-btn>
           </template>
 
-@if ($user->role === 'organizer')
-          <template>
+          <template v-if="userRole == 'organizer'">
             <v-data-table
               v-model="selected"
-              :headers="headersForOrganizer"
-              :items="{{ $user->events }}"
+              :headers="headers"
+              :items="items"
               :single-select="singleSelect"
               item-key="id"
               show-select
@@ -76,38 +75,9 @@
               </template>
             </v-data-table>
           </template>
-@elseif ($user->role === 'participant')
-          <template>
-            <v-data-table
-              v-model="selected"
-              :headers="headersForParticipant"
-              :items="{{ $events }}"
-              :single-select="singleSelect"
-              item-key="id"
-              show-select
-              class="elevation-1"
-            >
-              <template v-slot:top>
-                <v-switch
-                  v-model="singleSelect"
-                  label="Single select"
-                  class="pa-3"
-                ></v-switch>
-              </template>
-              <template v-slot:item.show="{ item }">
-                <td>
-                  <v-btn
-                    color="blue-grey"
-                    class="ma-2 white--text"
-                    @click="showItem(item)"
-                  >
-                    Show
-                  </v-btn>
-                </td>
-              </template>
-            </v-data-table>
+
+          <template v-else-if="userRole == 'participant'">
           </template>
-@endif
 
         </v-container>
       </v-main>
@@ -128,9 +98,11 @@
 
       data () {
         return {
+          userRole: '{{ $user->role }}',
+          items: @json($events),
           singleSelect: false,
           selected: [],
-          headersForOrganizer: [
+          headers: [
             {
               text: 'ID',
               align: 'start',
@@ -140,21 +112,9 @@
             { text: 'Title', value: 'title' },
             { text: 'Place', value: 'place' },
             { text: 'Fee', value: 'fee' },
+            { text: 'Show', value: 'show' },
             { text: 'Published', value: 'published' },
-            { text: 'Show', value: 'show' },
             { text: 'Actions', value: 'actions' },
-          ],
-          headersForParticipant: [
-            {
-              text: 'ID',
-              align: 'start',
-              sortable: false,
-              value: 'id',
-            },
-            { text: 'Title', value: 'title' },
-            { text: 'Place', value: 'place' },
-            { text: 'Fee', value: 'fee' },
-            { text: 'Show', value: 'show' },
           ],
         }
       },

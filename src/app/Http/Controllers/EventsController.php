@@ -17,11 +17,15 @@ class EventsController extends Controller
     public function index()
     {
         $user = User::find(Auth::id());
-        if ($user->cannot('viewAny')) {
+        if ($user->cannot('viewAny', Event::class)) {
             abort(403);
         }
 
-        $events = Event::all();
+        if ($user->role == 'participant') {
+            $events = Event::all();
+        } else if ($user->role == 'organizer') {
+            $events = $user->events;
+        }
 
         return view('events.index', [
             'user' => $user,
@@ -37,7 +41,7 @@ class EventsController extends Controller
     public function create()
     {
         $user = User::find(Auth::id());
-        if ($user->cannot('create')) {
+        if ($user->cannot('create', Event::class)) {
             abort(403);
         }
 
@@ -55,7 +59,7 @@ class EventsController extends Controller
     public function store(Request $request)
     {
         $user = User::find(Auth::id());
-        if ($user->cannot('create')) {
+        if ($user->cannot('create', Event::class)) {
             abort(403);
         }
 
