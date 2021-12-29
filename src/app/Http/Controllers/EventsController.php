@@ -17,6 +17,10 @@ class EventsController extends Controller
     public function index()
     {
         $user = User::find(Auth::id());
+        if ($user->cannot('viewAny')) {
+            abort(403);
+        }
+
         $events = Event::all();
 
         return view('events.index', [
@@ -33,6 +37,9 @@ class EventsController extends Controller
     public function create()
     {
         $user = User::find(Auth::id());
+        if ($user->cannot('create')) {
+            abort(403);
+        }
 
         return view('events.create', [
             'user' => $user
@@ -47,6 +54,11 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::find(Auth::id());
+        if ($user->cannot('create')) {
+            abort(403);
+        }
+
         $event = new Event;
         $event->user_id = Auth::id();
         $event->title = $request->title;
@@ -56,7 +68,6 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        $user = User::find(Auth::id());
         $events = Event::all();
 
         return view('events.index', [
@@ -74,6 +85,9 @@ class EventsController extends Controller
     public function show(Event $event)
     {
         $user = User::find(Auth::id());
+        if ($user->cannot('view', $event)) {
+            abort(403);
+        }
 
         return view('events.show', [
             'user' => $user,
@@ -90,6 +104,9 @@ class EventsController extends Controller
     public function edit(Event $event)
     {
         $user = User::find(Auth::id());
+        if ($user->cannot('update', $event)) {
+            abort(403);
+        }
 
         return view('events.edit', [
             'user' => $user,
@@ -106,6 +123,11 @@ class EventsController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        $user = User::find(Auth::id());
+        if ($user->cannot('update', $event)) {
+            abort(403);
+        }
+
         $event->title = $request->title;
         $event->description = $request->description;
         $event->place = $request->place;
@@ -113,7 +135,6 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        $user = User::find(Auth::id());
         $events = Event::all();
 
         return view('events.index', [
@@ -130,6 +151,11 @@ class EventsController extends Controller
      */
     public function destroy(Event $event)
     {
+        $user = User::find(Auth::id());
+        if ($user->cannot('delete', $event)) {
+            abort(403);
+        }
+
         $event->delete();
     }
 }
