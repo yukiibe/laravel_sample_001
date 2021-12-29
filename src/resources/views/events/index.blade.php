@@ -98,7 +98,7 @@
 
       data () {
         return {
-          userRole: '{{ $user->role }}',
+          userRole: "{{ $user->role }}",
           items: @json($events),
           singleSelect: false,
           selected: [],

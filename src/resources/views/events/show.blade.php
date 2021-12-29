@@ -98,10 +98,12 @@
           await axios.post('/logout', {
             _token: "{{ csrf_token() }}"
           })
-          location.reload()
+          .then(function (response) {
+            location.reload()
+          })
         },
         convertPublishedToString (published) {
-          if (published) {
+          if (published == '1') {
             return "Published";
           } else {
             return "Not Published";

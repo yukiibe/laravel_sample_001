@@ -150,7 +150,9 @@
           await axios.post('/logout', {
             _token: "{{ csrf_token() }}"
           })
-          location.reload()
+          .then(function (response) {
+            location.reload()
+          })
         }
       },
 

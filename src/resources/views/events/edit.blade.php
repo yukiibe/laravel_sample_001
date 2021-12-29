@@ -35,7 +35,7 @@
                     outlined
                     type="text"
                     name="title"
-                    v-model="title"
+                    v-model="event.title"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -52,7 +52,7 @@
                     row-height="30"
                     type="textarea"
                     name="description"
-                    v-model="description"
+                    v-model="event.description"
                   ></v-textarea>
                 </v-col>
               </v-row>
@@ -67,7 +67,7 @@
                     outlined
                     type="text"
                     name="place"
-                    v-model="place"
+                    v-model="event.place"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -82,7 +82,7 @@
                     outlined
                     type="text"
                     name="fee"
-                    v-model="fee"
+                    v-model="event.fee"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -93,7 +93,7 @@
                   sm="6"
                 >
                   <v-radio-group
-                    v-model="published"
+                    v-model="event.published"
                     row
                   >
                     <v-radio
@@ -142,11 +142,13 @@
 
       data () {
         return {
-          title: "{{ $event->title }}",
-          description: "{{ $event->description }}",
-          place: "{{ $event->place }}",
-          fee: "{{ $event->fee }}",
-          published: "{{ $event->published }}"
+          event: {
+            title: "{{ $event->title }}",
+            description: "{{ $event->description }}",
+            place: "{{ $event->place }}",
+            fee: "{{ $event->fee }}",
+            published: "{{ $event->published }}",
+          },
         }
       },
 
@@ -155,7 +157,9 @@
           await axios.post('/logout', {
             _token: "{{ csrf_token() }}"
           })
-          location.reload()
+          .then(function (response) {
+            location.reload()
+          })
         }
       },
 
