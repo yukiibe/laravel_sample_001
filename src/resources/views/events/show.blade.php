@@ -21,28 +21,28 @@
         <v-container fluid>
 
           <template>
-            <h2>@{{ event.title }}</h2>
+            <h2>@{{ item.title }}</h2>
 
             <v-divider></v-divider>
 
             <div>
               <h3>Detail</h3>
-              <p>@{{ event.description }}</p>
+              <p>@{{ item.description }}</p>
             </div>
 
             <div>
               <h3>Place</h3>
-              <p>@{{ event.place }}</p>
+              <p>@{{ item.place }}</p>
             </div>
 
             <div>
               <h3>Fee</h3>
-              <p>@{{ event.fee }}</p>
+              <p>@{{ item.fee }}</p>
             </div>
 
             <div>
               <h3>Published</h3>
-              <p>@{{ convertPublishedToString(event.published) }}</p>
+              <p>@{{ convertPublishedToString(item.published) }}</p>
             </div>
 
             <v-form method="POST" action="/participations" v-if="userRole == 'participant'">
@@ -57,6 +57,16 @@
               </v-btn>
               <input type="hidden" name="event_id" value="{{ $event->id }}">
             </v-form>
+
+            <v-btn
+              v-if="userRole == 'organizer'"
+              class="mr-4 white--text"
+              style="text-transform: none"
+              color="blue-grey"
+              @click="editItem(item)"
+            >
+              Edit This Event
+            </btn>
 
           </template>
         </v-container>
@@ -79,7 +89,7 @@
       data () {
         return {
           userRole: "{{ $user->role }}",
-          event: {
+          item: {
             id: "{{ $event->id }}",
             title: "{{ $event->title }}",
             description: "{{ $event->description }}",
@@ -98,6 +108,9 @@
           .then(function (response) {
             location.reload()
           })
+        },
+        editItem (item) {
+          location.href = '/events/' + item.id + '/edit'
         },
         convertPublishedToString (published) {
           if (published == '1') {

@@ -48,23 +48,17 @@
                   class="pa-3"
                 ></v-switch>
               </template>
+              <template v-slot:item.title="{ item }">
+                <td>
+                  <a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a>
+                </td>
+              </template>
               <template v-slot:item.published="{ item }">
                 <td v-if="item.published">
                   Published
                 </td>
                 <td v-else>
                   Not Published
-                </td>
-              </template>
-              <template v-slot:item.show="{ item }">
-                <td>
-                  <v-btn
-                    color="blue-grey"
-                    class="ma-2 white--text"
-                    @click="showItem(item)"
-                  >
-                    Show
-                  </v-btn>
                 </td>
               </template>
               <template v-slot:item.actions="{ item }">
@@ -112,7 +106,6 @@
             { text: 'Title', value: 'title' },
             { text: 'Place', value: 'place' },
             { text: 'Fee', value: 'fee' },
-            { text: 'Show', value: 'show' },
             { text: 'Published', value: 'published' },
             { text: 'Actions', value: 'actions' },
           ],
