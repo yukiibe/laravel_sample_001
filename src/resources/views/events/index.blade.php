@@ -20,7 +20,7 @@
       <v-main>
         <v-container fluid>
 
-          <template>
+          <template v-if="userRole == 'organizer'">
             <v-btn
               class="ma-2"
               style="text-transform: none"

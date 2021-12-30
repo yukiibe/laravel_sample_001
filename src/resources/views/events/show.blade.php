@@ -45,10 +45,8 @@
               <p>@{{ convertPublishedToString(event.published) }}</p>
             </div>
 
-@if ($user->role === 'participant')
-            <v-form method="POST" action="/participations">
+            <v-form method="POST" action="/participations" v-if="userRole == 'participant'">
               @csrf
-
               <v-btn
                 class="mr-4"
                 style="text-transform: none"
@@ -57,10 +55,8 @@
               >
                 Participate This Event
               </v-btn>
-
               <input type="hidden" name="event_id" value="{{ $event->id }}">
             </v-form>
-@endif
 
           </template>
         </v-container>
@@ -82,6 +78,7 @@
 
       data () {
         return {
+          userRole: "{{ $user->role }}",
           event: {
             id: "{{ $event->id }}",
             title: "{{ $event->title }}",

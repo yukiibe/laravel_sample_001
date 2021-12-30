@@ -42,6 +42,8 @@ class ParticipationsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::find(Auth::id());
+
         // Get the organizer by the requested event id
         $event = Event::find($request->event_id);
         $organizer = User::find($event->user_id);
@@ -52,7 +54,9 @@ class ParticipationsController extends Controller
         $participation->event_id = $request->event_id;
         $participation->save();
 
-        return view('participations.created');
+        return view('participations.index', [
+            'user' => $user
+        ]);
     }
 
     /**
