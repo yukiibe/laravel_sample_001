@@ -31,7 +31,10 @@
             </v-btn>
           </template>
 
-          <template v-if="userRole == 'organizer'">
+          <template v-if="userRole == 'participant'">
+          </template>
+
+          <template v-else-if="userRole == 'organizer'">
             <v-data-table
               v-model="selected"
               :headers="headers"
@@ -68,9 +71,6 @@
                 </td>
               </template>
             </v-data-table>
-          </template>
-
-          <template v-else-if="userRole == 'participant'">
           </template>
 
         </v-container>

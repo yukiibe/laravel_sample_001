@@ -20,12 +20,14 @@
       <v-main>
         <v-container fluid>
 
-@if ($user->role === 'organizer')
-          <template>
+          <template v-if="userRole == 'participant'">
+          </template>
+
+          <template v-else-if="userRole == 'organizer'">
             <v-data-table
               v-model="selected"
-              :headers="headersForOrganizer"
-              :items="{{ $user->participationsForOrganizer }}"
+              :headers="headers"
+              :items="items"
               :single-select="singleSelect"
               item-key="id"
               show-select
@@ -40,27 +42,6 @@
               </template>
             </v-data-table>
           </template>
-@elseif ($user->role === 'participant')
-          <template>
-            <v-data-table
-              v-model="selected"
-              :headers="headersForParticipant"
-              :items="{{ $user->participationsForParticipant }}"
-              :single-select="singleSelect"
-              item-key="id"
-              show-select
-              class="elevation-1"
-            >
-              <template v-slot:top>
-                <v-switch
-                  v-model="singleSelect"
-                  label="Single select"
-                  class="pa-3"
-                ></v-switch>
-              </template>
-            </v-data-table>
-          </template>
-@endif
 
         </v-container>
       </v-main>
@@ -81,9 +62,11 @@
 
       data () {
         return {
+          userRole: "{{ $user->role }}",
+          items: @json($participations),
           singleSelect: false,
           selected: [],
-          headersForOrganizer: [
+          headers: [
             {
               text: 'ID',
               align: 'start',

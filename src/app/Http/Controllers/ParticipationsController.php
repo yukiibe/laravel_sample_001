@@ -19,8 +19,15 @@ class ParticipationsController extends Controller
     {
         $user = User::find(Auth::id());
 
+        if ($user->role == 'participant') {
+            $participations = $user->participationsForParticipant;
+        } else if ($user->role == 'organizer') {
+            $participations = $user->participationsForOrganizer;
+        }
+
         return view('participations.index', [
-            'user' => $user
+            'user' => $user,
+            'participations' => $participations,
         ]);
     }
 
