@@ -18,10 +18,6 @@ class EventsController extends Controller
     public function index()
     {
         $user = User::find(Auth::id());
-        if ($user->cannot('viewAny', Event::class)) {
-            abort(403);
-        }
-
         if ($user->role == 'participant') {
             $events = Event::all();
         } else if ($user->role == 'organizer') {

@@ -19,16 +19,7 @@ class EventPolicy
      */
     public function viewAny(User $user)
     {
-        if ($user->role == 'organizer') {
-            $event = Event::where('user_id', $user->id)->first();
-            if ($event) {
-                return $event->user_id == $user->id;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
+        //
     }
 
     /**
