@@ -73,8 +73,9 @@
               sortable: false,
               value: 'id',
             },
-            { text: 'Participant ID', value: 'participant_id' },
-            { text: 'Event ID', value: 'event_id' },
+            { text: 'Participant ID', value: 'user_id' },
+            { text: 'Participant Name', value: 'user.name' },
+            { text: 'Event Title', value: 'event.title' },
           ],
           headersForParticipant: [
             {

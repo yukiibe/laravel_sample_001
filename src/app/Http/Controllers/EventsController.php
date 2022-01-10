@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
@@ -72,7 +73,7 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        $events = Event::all();
+        $events = $user->events;
 
         return view('events.index', [
             'user' => $user,
@@ -139,7 +140,7 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        $events = Event::all();
+        $events = $user->events;
 
         return view('events.index', [
             'user' => $user,

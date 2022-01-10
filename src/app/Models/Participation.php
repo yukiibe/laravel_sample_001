@@ -14,6 +14,16 @@ class Participation extends Model
      * 
      * @return \App\Models\Event  $event
      */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the event for the participation
+     * 
+     * @return \App\Models\Event  $event
+     */
     public function event()
     {
         return $this->belongsTo(Event::class);

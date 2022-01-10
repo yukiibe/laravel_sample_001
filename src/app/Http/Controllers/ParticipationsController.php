@@ -7,6 +7,7 @@ use App\Models\Participation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ParticipationsController extends Controller
 {
@@ -20,9 +21,11 @@ class ParticipationsController extends Controller
         $user = User::find(Auth::id());
 
         if ($user->role == 'participant') {
-            $participations = $user->participationsForParticipant;
+            $participations = $user->participations;
         } else if ($user->role == 'organizer') {
-            $participations = $user->participationsForOrganizer;
+            $participations = Participation::with(['user', 'event'])->whereHas('Event', function ($query) use ($user) {
+                return $query->where('user_id', $user->id);
+            })->get();
         }
 
         return view('participations.index', [
@@ -56,13 +59,13 @@ class ParticipationsController extends Controller
         $organizer = User::find($event->user_id);
 
         $participation = new Participation;
-        $participation->participant_id = Auth::id();
-        $participation->organizer_id = $organizer->id;
+        $participation->user_id = $user->id;
         $participation->event_id = $request->event_id;
         $participation->save();
 
         return view('participations.index', [
-            'user' => $user
+            'user' => $user,
+            'participations' => $participations,
         ]);
     }
 

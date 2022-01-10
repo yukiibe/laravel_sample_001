@@ -47,23 +47,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the participations for the organizing user
+     * Get the participations for the user
      * 
      * @return \App\Models\Participation  $participation
      */
-    public function participationsForOrganizer()
+    public function participations()
     {
-        return $this->hasMany(Participation::class, 'organizer_id');
-    }
-
-    /**
-     * Get the participations for the participating user
-     * 
-     * @return \App\Models\Participation  $participation
-     */
-    public function participationsForParticipant()
-    {
-        return $this->hasMany(Participation::class, 'participant_id');
+        return $this->hasMany(Participation::class);
     }
 
     /**
