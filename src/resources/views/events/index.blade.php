@@ -32,6 +32,36 @@
           </template>
 
           <template v-if="userRole == 'participant'">
+            <v-container>
+              <v-row>
+                <v-col
+                  v-for="item in items"
+                  cols="4"
+                >
+                  <v-card
+                    class="mx-auto"
+                    max_width="344"
+                    outlined
+                  >
+                    <v-list-item three-line>
+                      <v-list-item-content>
+                        <div class="text-overline mb-4">
+                          Event
+                        </div>
+                        <v-list-item-title class="text-h5 mb-1">
+                          <a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a>
+                        </v-list-item-title>
+                        <v-list-item-subtitle >
+                          <div class="text-truncate">
+                            @{{ item.description }}
+                          </div>
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-container>
           </template>
 
           <template v-else-if="userRole == 'organizer'">
