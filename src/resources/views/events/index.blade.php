@@ -95,11 +95,40 @@
               <template v-slot:item.actions="{ item }">
                 <td>
                   <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                  <v-icon small class="mr-2" @click="deleteItem(item)">mdi-delete</v-icon>
+                  <v-icon small class="mr-2" @click="confirmDelete(item)">mdi-delete</v-icon>
                 </td>
               </template>
             </v-data-table>
           </template>
+
+          <v-dialog
+            v-model="dialogDelete"
+            max-width="290"
+          >
+            <v-card>
+              <v-card-title>
+                Are you sure you want to delete?
+              </v-card-title>
+              <v-card-actions>
+                <v-btn
+                  color="green darken-1"
+                  style="text-transform: none"
+                  text
+                  @click="cancelDelete()"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  color="green darken-1"
+                  style="text-transform: none"
+                  text
+                  @click="deleteItem()"
+                >
+                  Delete
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
 
         </v-container>
       </v-main>
@@ -139,6 +168,8 @@
             { text: 'Published', value: 'published' },
             { text: 'Actions', value: 'actions' },
           ],
+          dialogDelete: false,
+          itemForDelete: null,
         }
       },
 
@@ -157,8 +188,16 @@
         editItem (item) {
           location.href = '/events/' + item.id + '/edit'
         },
-        async deleteItem (item) {
-          await axios.delete('/events/' + item.id)
+        confirmDelete (item) {
+          this.itemForDelete = item
+          this.dialogDelete = true
+        },
+        cancelDelete () {
+          this.itemForDelete = null
+          this.dialogDelete = false
+        },
+        async deleteItem () {
+          await axios.delete('/events/' + this.itemForDelete.id)
             .then(function (response) {
               location.reload()
             })
