@@ -20,17 +20,6 @@
       <v-main>
         <v-container fluid>
 
-          <template v-if="userRole == 'organizer'">
-            <v-btn
-              class="ma-2"
-              style="text-transform: none"
-              color="success"
-              href="/events/create"
-            >
-              New Event
-            </v-btn>
-          </template>
-
           <template v-if="userRole == 'participant'">
             <v-container>
               <v-row>
@@ -42,6 +31,7 @@
                     class="mx-auto"
                     max_width="344"
                     outlined
+                    elevation="4"
                   >
                     <v-list-item three-line>
                       <v-list-item-content>
@@ -65,6 +55,14 @@
           </template>
 
           <template v-else-if="userRole == 'organizer'">
+            <v-btn
+              class="ma-2"
+              style="text-transform: none"
+              color="success"
+              href="/events/create"
+            >
+              New Event
+            </v-btn>
             <v-data-table
               v-model="selected"
               :headers="headers"

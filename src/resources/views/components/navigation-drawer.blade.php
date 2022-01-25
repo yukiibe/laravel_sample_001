@@ -20,20 +20,20 @@
     <v-divider></v-divider>
     <v-list nav>
       <v-list-item-group>
-        <v-list-item href="/participations">
-          <v-list-item-icon>
-            <v-icon>mdi-view-list</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Participations</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
         <v-list-item href="/events">
           <v-list-item-icon>
             <v-icon>mdi-calendar</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Events</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item href="/participations">
+          <v-list-item-icon>
+            <v-icon>mdi-view-list</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Participations</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
