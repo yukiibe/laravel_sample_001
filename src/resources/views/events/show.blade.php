@@ -84,7 +84,9 @@
   <script>
     new Vue({
       el: '#app',
-      vuetify: new Vuetify(),
+      vuetify: new Vuetify({
+        theme: { dark: true },
+      }),
 
       data () {
         return {
