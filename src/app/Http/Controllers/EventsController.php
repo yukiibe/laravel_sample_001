@@ -71,10 +71,10 @@ class EventsController extends Controller
 
         $events = $user->events;
 
-        return view('events.index', [
-            'user' => $user,
-            'events' => $events
-        ]);
+#        return view('events.index', [
+#            'user' => $user,
+#            'events' => $events
+#        ]);
     }
 
     /**
@@ -138,10 +138,10 @@ class EventsController extends Controller
 
         $events = $user->events;
 
-        return view('events.index', [
-            'user' => $user,
-            'events' => $events
-        ]);
+#        return view('events.index', [
+#            'user' => $user,
+#            'events' => $events
+#        ]);
     }
 
     /**
