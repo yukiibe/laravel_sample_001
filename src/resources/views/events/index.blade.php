@@ -20,49 +20,14 @@
       <v-main>
         <v-container fluid>
 
-          <!-- Template For Participant -->
-          <template v-if="userRole == 'participant'">
-            <v-container>
-              <v-row>
-                <v-col
-                  v-for="item in items"
-                  :key="item.id"
-                  cols="4"
-                >
-                  <v-card
-                    class="mx-auto"
-                    max_width="344"
-                    outlined
-                    elevation="4"
-                  >
-                    <v-list-item three-line>
-                      <v-list-item-content>
-                        <div class="text-overline mb-4">
-                          Event
-                        </div>
-                        <v-list-item-title class="text-h5 mb-1">
-                          <a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a>
-                        </v-list-item-title>
-                        <v-list-item-subtitle >
-                          <div class="text-truncate">
-                            @{{ item.description }}
-                          </div>
-                        </v-list-item-subtitle>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-container>
-          </template>
-
-          <!-- Template For Organizer -->
-          <template v-else-if="userRole == 'organizer'">
+          <!-- Template -->
+          <template>
             <v-btn
               class="ma-2"
               style="text-transform: none"
               color="success"
               @click="dialog = true"
+              v-if="userRole == 'organizer'"
             >
               New Event
             </v-btn>
@@ -81,11 +46,50 @@
                     outlined
                     elevation="4"
                   >
-
-                    <a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a>
-                    <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                    <v-icon small class="mr-2" @click="deleteItem(item)">mdi-delete</v-icon>
-
+                    <v-card-title><a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a></v-card-title>
+                    <v-card-text>@{{ item.published ? 'Published' : 'Unpublished' }}</v-card-text>
+                    <v-card-text v-if="userRole == 'organizer'">@{{ item.description }}</v-card-text>
+                    <v-card-actions v-if="userRole == 'organizer'">
+                      <v-btn
+                        color="teal lighten-3"
+                        text
+                        @click="editItem(item)"
+                      >
+                        <v-icon left>
+                          mdi-pencil
+                        </v-icon>
+                        Edit
+                      </v-btn>
+                      <v-btn
+                        color="red lighten-1"
+                        text
+                        @click="deleteItem(item)"
+                      >
+                        <v-icon left>
+                          mdi-delete
+                        </v-icon>
+                        Delete
+                      </v-btn>
+                    </v-card-actions>
+                    <v-card-actions v-else-if="userRole == 'participant'">
+                      <v-btn
+                        style="text-transform: none"
+                        color="teal lighten-3"
+                        text
+                        @click="show = !show"
+                      >
+                        Description More
+                      </v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+                    <v-expand-transition v-if="userRole == 'participant'">
+                      <div v-show="show">
+                        <v-divider></v-divider>
+                        <v-card-text>
+                          @{{ item.description }}
+                        </v-card-text>
+                      </div>
+                    </v-expand-transition>
                   </v-card>
                 </v-col>
               <v-row>
@@ -234,20 +238,8 @@
         return {
           dialog: false,
           dialogDelete: false,
+          show: false,
           userRole: "{{ $user->role }}",
-          headers: [
-            {
-              text: 'ID',
-              align: 'start',
-              sortable: false,
-              value: 'id',
-            },
-            { text: 'Title', value: 'title' },
-            { text: 'Place', value: 'place' },
-            { text: 'Fee', value: 'fee' },
-            { text: 'Published', value: 'published' },
-            { text: 'Actions', value: 'actions' },
-          ],
           items: @json($events),
           editFlg: false,
           editedItem: {
