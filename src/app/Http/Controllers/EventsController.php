@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventFile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +20,9 @@ class EventsController extends Controller
     {
         $user = User::find(Auth::id());
         if ($user->role == 'participant') {
-            $events = Event::all();
+            $events = Event::with('eventFile')->get();
         } else if ($user->role == 'organizer') {
-            $events = $user->events;
+            $events = Event::with(['eventFile'])->where('user_id', $user->id)->get();
         }
 
         return view('events.index', [
@@ -69,7 +70,10 @@ class EventsController extends Controller
         $event->published = $request->published;
         $event->save();
 
-        $events = $user->events;
+        $event_file = new EventFile;
+        $event->eventFile()->save($event_file);
+
+#        $events = $user->events;
 
 #        return view('events.index', [
 #            'user' => $user,

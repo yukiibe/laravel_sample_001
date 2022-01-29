@@ -18,4 +18,14 @@ class Event extends Model
     {
         return $this->hasMany(Participation::class);
     }
+
+    /**
+     * Get the event file for the event
+     * 
+     * @return \App\Models\EventFile  $event_file
+     */
+    public function eventFile()
+    {
+        return $this->hasOne(EventFile::class);
+    }
 }

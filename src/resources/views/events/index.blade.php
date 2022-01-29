@@ -46,7 +46,15 @@
                     outlined
                     elevation="4"
                   >
-                    <v-card-title><a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a></v-card-title>
+
+                    <v-img
+                      class="align-end"
+                      height="250"
+                      :src="item.event_file.file"
+                    >
+                      <v-card-title><a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a></v-card-title>
+                    </v-img>
+
                     <v-card-text>@{{ item.published ? 'Published' : 'Unpublished' }}</v-card-text>
                     <v-card-text v-if="userRole == 'organizer'">@{{ item.description }}</v-card-text>
                     <v-card-actions v-if="userRole == 'organizer'">
