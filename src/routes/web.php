@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\EventFilesController;
 use App\Http\Controllers\ParticipationsController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +37,10 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/participations',[ParticipationsController::class, 'index'])->name('participations.index');
     Route::post('/participations',[ParticipationsController::class, 'store'])->name('participations.store');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('/event_files/{event_file}', [EventFilesController::class, 'update'])->name('event_files.update');
 });
 
 require __DIR__.'/auth.php';

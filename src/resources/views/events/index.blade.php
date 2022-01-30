@@ -46,15 +46,31 @@
                     outlined
                     elevation="4"
                   >
-
                     <v-img
                       class="align-end"
                       height="250"
                       :src="item.event_file.file"
-                    >
-                      <v-card-title><a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a></v-card-title>
-                    </v-img>
-
+                    ></v-img>
+                    <v-card-title><a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a></v-card-title>
+                    <v-card-text v-if="userRole == 'organizer'">
+                      <v-file-input
+                        accept="image/png, image/jpeg, image/bmp"
+                        prepend-icon="mdi-camera"
+                        label="Select Image"
+                        @change="selectFile"
+                      ></v-file-input>
+                      <v-btn
+                        color="orange lighten-1"
+                        text
+                        @click="uploadFile(item)"
+                      >
+                        <v-icon left>
+                          mdi-upload
+                        </v-icon>
+                        Upload
+                      </v-btn>
+                    </v-card-text>
+                    <v-divider></v-divider>
                     <v-card-text>@{{ item.published ? 'Published' : 'Unpublished' }}</v-card-text>
                     <v-card-text v-if="userRole == 'organizer'">@{{ item.description }}</v-card-text>
                     <v-card-actions v-if="userRole == 'organizer'">
@@ -244,6 +260,7 @@
 
       data () {
         return {
+          selectedFile: null,
           dialog: false,
           dialogDelete: false,
           show: false,
@@ -333,6 +350,26 @@
           this.dialogDelete = false
           this.editFlg = false
           this.editedItem = this.defaultItem
+        },
+        selectFile (e) {
+          this.selectedFile = e
+          console.log(this.selectedFile)
+        },
+        async uploadFile (item) {
+          if (!this.selectedFile) {
+            return;
+          }
+          var config = {
+            headers: {
+              'content-type': 'multipart/form-data'
+            }
+          };
+          var formData = new FormData()
+          formData.append('file', this.selectedFile)
+          await axios.post('/event_files/' + item.event_file.id, formData, config)
+            .then(function (response) {
+              location.reload()
+            })
         },
       },
 

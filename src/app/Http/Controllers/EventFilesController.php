@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\EventFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class EventFilesController extends Controller
 {
@@ -48,7 +50,15 @@ class EventFilesController extends Controller
      */
     public function update(Request $request, EventFile $eventFile)
     {
-        //
+        Storage::disk('public')->delete($eventFile->event_id . ".png");
+
+        $path = $request->file('file')->storeAs(
+            'events', $eventFile->event_id . ".png", ['disk' => 'public']
+        );
+        $url = Storage::url($path);
+
+        $eventFile->file = $url;
+        $eventFile->save();
     }
 
     /**
