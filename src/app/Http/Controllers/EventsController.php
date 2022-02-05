@@ -32,23 +32,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $user = User::find(Auth::id());
-        if ($user->cannot('create', Event::class)) {
-            abort(403);
-        }
-
-        return view('events.create', [
-            'user' => $user
-        ]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -72,51 +55,6 @@ class EventsController extends Controller
 
         $event_file = new EventFile;
         $event->eventFile()->save($event_file);
-
-#        $events = $user->events;
-
-#        return view('events.index', [
-#            'user' => $user,
-#            'events' => $events
-#        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event)
-    {
-        $user = User::find(Auth::id());
-        if ($user->cannot('view', $event)) {
-            abort(403);
-        }
-
-        return view('events.show', [
-            'user' => $user,
-            'event' => $event
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Event $event)
-    {
-        $user = User::find(Auth::id());
-        if ($user->cannot('update', $event)) {
-            abort(403);
-        }
-
-        return view('events.edit', [
-            'user' => $user,
-            'event' => $event
-        ]);
     }
 
     /**
@@ -141,11 +79,6 @@ class EventsController extends Controller
         $event->save();
 
         $events = $user->events;
-
-#        return view('events.index', [
-#            'user' => $user,
-#            'events' => $events
-#        ]);
     }
 
     /**

@@ -49,9 +49,9 @@
                     <v-img
                       class="align-end"
                       height="250"
-                      :src="item.event_file.file"
+                      :src="filePath(item)"
                     ></v-img>
-                    <v-card-title><a href="javascript:void(0);" @click="showItem(item)">@{{ item.title }}</a></v-card-title>
+                    <v-card-title>@{{ item.title }}</v-card-title>
                     <v-card-text v-if="userRole == 'organizer'">
                       <v-file-input
                         accept="image/png, image/jpeg, image/bmp"
@@ -68,6 +68,16 @@
                           mdi-upload
                         </v-icon>
                         Upload
+                      </v-btn>
+                      <v-btn
+                        color="blue-grey lighten-1"
+                        text
+                        @click="deleteFile(item)"
+                      >
+                        <v-icon left>
+                          mdi-upload-off
+                        </v-icon>
+                        Delete
                       </v-btn>
                     </v-card-text>
                     <v-divider></v-divider>
@@ -299,9 +309,6 @@
             location.reload()
           })
         },
-        showItem (item) {
-          location.href = '/events/' + item.id
-        },
         editItem (item) {
           this.editFlg = true
           this.editedItem = item
@@ -351,9 +358,11 @@
           this.editFlg = false
           this.editedItem = this.defaultItem
         },
+        filePath (item) {
+          return item.event_file.file ? item.event_file.file : '/storage/default-event.png';
+        },
         selectFile (e) {
           this.selectedFile = e
-          console.log(this.selectedFile)
         },
         async uploadFile (item) {
           if (!this.selectedFile) {
@@ -366,13 +375,21 @@
           };
           var formData = new FormData()
           formData.append('file', this.selectedFile)
-          await axios.post('/event_files/' + item.event_file.id, formData, config)
+          await axios.post('/event_files/' + item.event_file.id + '/upload', formData, config)
+            .then(function (response) {
+              location.reload()
+            })
+        },
+        async deleteFile (item) {
+          if (!item.event_file.file) {
+            return;
+          }
+          await axios.post('/event_files/' + item.event_file.id + '/delete')
             .then(function (response) {
               location.reload()
             })
         },
       },
-
     })
   </script>
 </body>

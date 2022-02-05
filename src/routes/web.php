@@ -40,7 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::post('/event_files/{event_file}', [EventFilesController::class, 'update'])->name('event_files.update');
+    Route::post('/event_files/{event_file}/upload', [EventFilesController::class, 'upload'])->name('event_files.upload');
+    Route::post('/event_files/{event_file}/delete', [EventFilesController::class, 'delete'])->name('event_files.delete');
 });
 
 require __DIR__.'/auth.php';

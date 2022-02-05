@@ -10,45 +10,13 @@ use Illuminate\Support\Facades\Storage;
 class EventFilesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\EventFile  $eventFile
-     * @return \Illuminate\Http\Response
-     */
-    public function show(EventFile $eventFile)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Upload the event file in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\EventFile  $eventFile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EventFile $eventFile)
+    public function upload(Request $request, EventFile $eventFile)
     {
         Storage::disk('public')->delete($eventFile->event_id . ".png");
 
@@ -62,13 +30,16 @@ class EventFilesController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the event file from storage.
      *
      * @param  \App\Models\EventFile  $eventFile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EventFile $eventFile)
+    public function delete(Request $request, EventFile $eventFile)
     {
-        //
+        Storage::disk('public')->delete($eventFile->event_id . ".png");
+
+        $eventFile->file = '';
+        $eventFile->save();
     }
 }

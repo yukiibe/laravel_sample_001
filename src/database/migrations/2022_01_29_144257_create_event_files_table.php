@@ -16,7 +16,7 @@ class CreateEventFilesTable extends Migration
         Schema::create('event_files', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id');
-            $table->string('file')->default('storage/default-event.png');
+            $table->string('file')->default('');
             $table->timestamps();
         });
     }
