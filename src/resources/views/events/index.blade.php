@@ -108,6 +108,13 @@
                     <v-card-actions v-else-if="userRole == 'participant'">
                       <v-btn
                         style="text-transform: none"
+                        color="pink lighten-1"
+                        @click=""
+                      >
+                        Participate
+                      </v-btn>
+                      <v-btn
+                        style="text-transform: none"
                         color="teal lighten-3"
                         text
                         @click="show = !show"
