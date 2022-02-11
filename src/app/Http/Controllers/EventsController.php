@@ -20,7 +20,7 @@ class EventsController extends Controller
     {
         $user = User::find(Auth::id());
         if ($user->role == 'participant') {
-            $events = Event::with('eventFile')->get();
+            $events = Event::with(['eventFile', 'participations'])->get();
         } else if ($user->role == 'organizer') {
             $events = Event::with(['eventFile'])->where('user_id', $user->id)->get();
         }

@@ -52,6 +52,17 @@
                       :src="filePath(item)"
                     ></v-img>
                     <v-card-title>@{{ item.title }}</v-card-title>
+                    <v-chip
+                      class="ma-2"
+                      color="indigo"
+                      text-color="white"
+                      v-if="userRole == 'participant' && participatedByUser(item)"
+                    >
+                      <v-avatar left>
+                        <v-icon>mdi-checkbox-marked-circle</v-icon>
+                      </v-avatar>
+                      Participated
+                    </v-chip>
                     <v-card-text v-if="userRole == 'organizer'">
                       <v-file-input
                         accept="image/png, image/jpeg, image/bmp"
@@ -109,7 +120,8 @@
                       <v-btn
                         style="text-transform: none"
                         color="pink lighten-1"
-                        @click=""
+                        @click="participate(item)"
+                        v-if="!participatedByUser"
                       >
                         Participate
                       </v-btn>
@@ -227,6 +239,35 @@
               </v-card>
             </v-dialog>
 
+            <!-- Participate Dialog -->
+            <v-dialog
+              v-model="dialogParticipate"
+              max-width="300px"
+            >
+              <v-card>
+                <v-card-title class="text-h5">Participate This Event?</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="green darken-1"
+                    style="text-transform: none"
+                    text
+                    @click="close"
+                  >
+                    No
+                  </v-btn>
+                  <v-btn
+                    color="green darken-1"
+                    style="text-transform: none"
+                    text
+                    @click="confirmParticipate"
+                  >
+                    Yes
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
             <!-- Delete Dialog -->
             <v-dialog
               v-model="dialogDelete"
@@ -279,9 +320,11 @@
         return {
           selectedFile: null,
           dialog: false,
+          dialogParticipate: false,
           dialogDelete: false,
           show: false,
           userRole: "{{ $user->role }}",
+          loggedInUserId: "{{ $user->id }}",
           items: @json($events),
           editFlg: false,
           editedItem: {
@@ -321,10 +364,6 @@
           this.editedItem = item
           this.dialog = true
         },
-        deleteItem (item) {
-          this.editedItem = item
-          this.dialogDelete = true
-        },
         async save () {
           if (this.editFlg) {
             await axios.put('/events/' + this.editedItem.id, {
@@ -352,6 +391,10 @@
             })
           }
         },
+        deleteItem (item) {
+          this.editedItem = item
+          this.dialogDelete = true
+        },
         async confirmDelete () {
           await axios.delete('/events/' + this.editedItem.id)
             .then(function (response) {
@@ -359,8 +402,22 @@
               location.reload()
             })
         },
+        participate (item) {
+          this.editedItem = item
+          this.dialogParticipate = true
+        },
+        async confirmParticipate () {
+          await axios.post('/participations/', {
+            event_id: this.editedItem.id,
+          })
+          .then(function (response) {
+            location.reload()
+          })
+        },
         close () {
           this.dialog = false
+          this.dialogParticipate = false
+          this.dialogParticipated = false
           this.dialogDelete = false
           this.editFlg = false
           this.editedItem = this.defaultItem
@@ -395,6 +452,14 @@
             .then(function (response) {
               location.reload()
             })
+        },
+        participatedByUser (item) {
+          for (var i = 0; i < item.participations.length; i++) {
+            if (item.participations[i].user_id == this.loggedInUserId) {
+              return true
+            }
+          }
+          return false
         },
       },
     })
