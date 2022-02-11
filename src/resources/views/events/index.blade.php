@@ -76,7 +76,7 @@
                       <v-btn
                         color="blue-grey lighten-1"
                         text
-                        @click="deleteFile(item)"
+                        @click="deleteFileItem(item)"
                       >
                         <v-icon left>
                           mdi-upload-off
@@ -85,17 +85,6 @@
                       </v-btn>
                     </v-card-text>
                     <v-divider></v-divider>
-                    <v-chip
-                      class="ma-2"
-                      color="indigo"
-                      text-color="white"
-                      v-if="userRole == 'participant' && participatedByUser(item)"
-                    >
-                      <v-avatar left>
-                        <v-icon>mdi-checkbox-marked-circle</v-icon>
-                      </v-avatar>
-                      Participated
-                    </v-chip>
                     <v-chip
                       class="ma-2"
                       color="indigo"
@@ -147,6 +136,17 @@
                       >
                         Participate
                       </v-btn>
+                      <v-chip
+                        class="ma-2"
+                        color="indigo"
+                        text-color="white"
+                        v-if="participatedByUser(item)"
+                      >
+                        <v-avatar left>
+                          <v-icon>mdi-checkbox-marked-circle</v-icon>
+                        </v-avatar>
+                        Participated
+                      </v-chip>
                       <v-spacer></v-spacer>
                     </v-card-actions>
                     <v-expand-transition v-if="userRole == 'participant'">
@@ -310,6 +310,35 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+
+            <!-- File Delete Dialog -->
+            <v-dialog
+              v-model="dialogFileDelete"
+              max-width="500px"
+            >
+              <v-card>
+                <v-card-title class="text-h6">Are you sure you want to delete this file?</v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="green darken-1"
+                    style="text-transform: none"
+                    text
+                    @click="close"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    color="green darken-1"
+                    style="text-transform: none"
+                    text
+                    @click="confirmFileDelete"
+                  >
+                    OK
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </template>
         </v-container>
       </v-main>
@@ -336,6 +365,7 @@
           dialog: false,
           dialogParticipate: false,
           dialogDelete: false,
+          dialogFileDelete: false,
           show: false,
           userRole: "{{ $user->role }}",
           loggedInUserId: "{{ $user->id }}",
@@ -354,6 +384,14 @@
             place: '',
             fee: 0,
             published: 0
+          },
+          editedFileItem: {
+            event_id: null,
+            file: '',
+          },
+          defaultFileItem: {
+            event_id: null,
+            file: '',
           },
         }
       },
@@ -400,7 +438,6 @@
               published: this.editedItem.published
             })
             .then(function (response) {
-              this.close()
               location.reload()
             })
           }
@@ -412,7 +449,6 @@
         async confirmDelete () {
           await axios.delete('/events/' + this.editedItem.id)
             .then(function (response) {
-              this.close()
               location.reload()
             })
         },
@@ -433,8 +469,10 @@
           this.dialogParticipate = false
           this.dialogParticipated = false
           this.dialogDelete = false
+          this.dialogFileDelete = false
           this.editFlg = false
           this.editedItem = this.defaultItem
+          this.editedFileItem = this.defaultFileItem
         },
         filePath (item) {
           return item.event_file.file ? item.event_file.file : '/storage/default-event.png';
@@ -458,11 +496,15 @@
               location.reload()
             })
         },
-        async deleteFile (item) {
+        deleteFileItem (item) {
           if (!item.event_file.file) {
             return;
           }
-          await axios.post('/event_files/' + item.event_file.id + '/delete')
+          this.editedFileItem = item
+          this.dialogFileDelete = true
+        },
+        async confirmFileDelete () {
+          await axios.post('/event_files/' + this.editedFileItem.event_file.id + '/delete')
             .then(function (response) {
               location.reload()
             })
