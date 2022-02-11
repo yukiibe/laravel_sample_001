@@ -52,17 +52,10 @@
                       :src="filePath(item)"
                     ></v-img>
                     <v-card-title>@{{ item.title }}</v-card-title>
-                    <v-chip
-                      class="ma-2"
-                      color="indigo"
-                      text-color="white"
-                      v-if="userRole == 'participant' && participatedByUser(item)"
-                    >
-                      <v-avatar left>
-                        <v-icon>mdi-checkbox-marked-circle</v-icon>
-                      </v-avatar>
-                      Participated
-                    </v-chip>
+                    <v-card-subtitle>
+                      Place：@{{ item.place }}<br>
+                      Fee：@{{ item.fee }}
+                    </v-card-subtitle>
                     <v-card-text v-if="userRole == 'organizer'">
                       <v-file-input
                         accept="image/png, image/jpeg, image/bmp"
@@ -92,7 +85,28 @@
                       </v-btn>
                     </v-card-text>
                     <v-divider></v-divider>
-                    <v-card-text>@{{ item.published ? 'Published' : 'Unpublished' }}</v-card-text>
+                    <v-chip
+                      class="ma-2"
+                      color="indigo"
+                      text-color="white"
+                      v-if="userRole == 'participant' && participatedByUser(item)"
+                    >
+                      <v-avatar left>
+                        <v-icon>mdi-checkbox-marked-circle</v-icon>
+                      </v-avatar>
+                      Participated
+                    </v-chip>
+                    <v-chip
+                      class="ma-2"
+                      color="indigo"
+                      text-color="white"
+                      v-if="userRole == 'organizer' && item.published"
+                    >
+                      <v-avatar left>
+                        <v-icon>mdi-checkbox-marked-circle</v-icon>
+                      </v-avatar>
+                      Published
+                    </v-chip>
                     <v-card-text v-if="userRole == 'organizer'">@{{ item.description }}</v-card-text>
                     <v-card-actions v-if="userRole == 'organizer'">
                       <v-btn
@@ -119,19 +133,19 @@
                     <v-card-actions v-else-if="userRole == 'participant'">
                       <v-btn
                         style="text-transform: none"
-                        color="pink lighten-1"
-                        @click="participate(item)"
-                        v-if="!participatedByUser"
-                      >
-                        Participate
-                      </v-btn>
-                      <v-btn
-                        style="text-transform: none"
                         color="teal lighten-3"
                         text
                         @click="show = !show"
                       >
                         Description More
+                      </v-btn>
+                      <v-btn
+                        style="text-transform: none"
+                        color="pink lighten-1"
+                        @click="participate(item)"
+                        v-if="!participatedByUser(item)"
+                      >
+                        Participate
                       </v-btn>
                       <v-spacer></v-spacer>
                     </v-card-actions>
