@@ -132,7 +132,7 @@
                         style="text-transform: none"
                         color="pink lighten-1"
                         @click="participate(item)"
-                        v-if="!participatedByUser(item)"
+                        v-if="!isParticipatedByUser(item)"
                       >
                         Participate
                       </v-btn>
@@ -140,7 +140,7 @@
                         class="ma-2"
                         color="indigo"
                         text-color="white"
-                        v-if="participatedByUser(item)"
+                        v-if="isParticipatedByUser(item)"
                       >
                         <v-avatar left>
                           <v-icon>mdi-checkbox-marked-circle</v-icon>
@@ -509,7 +509,7 @@
               location.reload()
             })
         },
-        participatedByUser (item) {
+        isParticipatedByUser (item) {
           for (var i = 0; i < item.participations.length; i++) {
             if (item.participations[i].user_id == this.loggedInUserId) {
               return true

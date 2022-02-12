@@ -28,20 +28,4 @@ class Event extends Model
     {
         return $this->hasOne(EventFile::class);
     }
-
-    /**
-     * If the event is participated by the user
-     * 
-     * @param int  $user_id
-     * @return bool
-     */
-    public function participatedByUser($user_id)
-    {
-        foreach ($this->participations as $participation) {
-            if ($participation->user_id == $user_id) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

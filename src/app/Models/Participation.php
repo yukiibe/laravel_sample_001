@@ -28,4 +28,18 @@ class Participation extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    /**
+     * If the event is participated by the user
+     * 
+     * @param int  $user_id
+     * @return bool
+     */
+    public function isParticipatedByUser($user_id)
+    {
+        if ($this->user_id == $user_id) {
+            return true;
+        }
+        return false;
+    }
 }
