@@ -20,6 +20,24 @@
       <v-main>
 
         <v-container fluid>
+
+          <v-row v-if="userRole == 'participant'">
+            <!-- Participation Data Table -->
+            <v-col cols="12">
+              <template>
+                <v-data-table
+                  :headers="headersForParticipantParticipations"
+                  :items="participationItems"
+                  class="elevation-3"
+                >
+                  <template v-slot:top>
+                    <v-subheader>All Participations</v-subheader>
+                  </template>
+                </v-data-table>
+              </template>
+            </v-col>
+          </v-row>
+
           <v-row v-if="userRole == 'organizer'">
             <!-- Events Data Table -->
             <v-col cols="4">
@@ -41,7 +59,7 @@
                 </v-data-table>
               </template>
             </v-col>
-            <!-- Selected Event Participation Data Table -->
+            <!-- Participation Data Table -->
             <v-col cols="8">
               <template>
                 <v-data-table
@@ -82,21 +100,30 @@
           participationItems: @json($participations),
           eventItems: @json($events),
           selectedEvent: null,
+          headersForParticipantParticipations: [
+            {
+              text: 'Participation ID',
+              align: 'start',
+              sortable: false,
+              value: 'id',
+            },
+            { text: 'Event Title', value: 'event.title' },
+          ],
           headersForParticipations: [
             {
-              text: 'ID',
+              text: 'Participation ID',
               align: 'start',
               sortable: false,
               value: 'id',
             },
             { text: 'Participant ID', value: 'user_id' },
             { text: 'Participant Name', value: 'user.name' },
-            { text: 'Participant Name', value: 'user.email' },
+            { text: 'Participant Email', value: 'user.email' },
             { text: 'Event Title', value: 'event.title' },
           ],
           headersForEvents: [
             {
-              text: 'ID',
+              text: 'Event ID',
               align: 'start',
               sortable: false,
               value: 'id',
@@ -133,7 +160,7 @@
             _token: "{{ csrf_token() }}"
           })
           location.reload()
-        }
+        },
       },
 
     })

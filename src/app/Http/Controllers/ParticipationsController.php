@@ -20,6 +20,7 @@ class ParticipationsController extends Controller
     {
         $user = User::find(Auth::id());
 
+        $events = '';
         if ($user->role == 'participant') {
             $participations = Participation::with('event')->where('user_id', $user->id)->get();
         } else if ($user->role == 'organizer') {
