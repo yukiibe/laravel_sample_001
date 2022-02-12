@@ -18,32 +18,63 @@
 
       <!-- Content -->
       <v-main>
-        <v-container fluid>
 
+        <v-container fluid>
+          <v-row v-if="userRole == 'organizer'">
+            <!-- Events Data Table -->
+            <v-col cols="4">
+              <template>
+                <v-data-table
+                  :headers="headersForEvents"
+                  :items="eventItems"
+                  class="elevation-3"
+                >
+                  <template v-slot:top>
+                    <v-subheader>Events</v-subheader>
+                  </template>
+                  <template v-slot:item.actions="{ item }">
+                    <v-switch
+                      v-model="selectedEvent"
+                      :value="item"
+                    ></v-switch>
+                  </template>
+                </v-data-table>
+              </template>
+            </v-col>
+            <!-- Selected Event Participation Data Table -->
+            <v-col cols="8">
+              <template>
+                <v-data-table
+                  :headers="headersForParticipations"
+                  :items="selectedEventParticipationItems"
+                  class="elevation-3"
+                >
+                  <template v-slot:top>
+                    <v-subheader>Participations In @{{ selectedEventTitle }}</v-subheader>
+                  </template>
+                </v-data-table>
+              </template>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <v-container fluid>
           <template v-if="userRole == 'participant'">
           </template>
-
-          <template v-else-if="userRole == 'organizer'">
+          <!-- All Participations Data Table -->
+          <template v-if="userRole == 'organizer'">
             <v-data-table
-              v-model="selected"
-              :headers="headers"
-              :items="items"
-              :single-select="singleSelect"
-              item-key="id"
-              show-select
-              class="elevation-1"
+              :headers="headersForParticipations"
+              :items="participationItems"
+              class="elevation-3"
             >
               <template v-slot:top>
-                <v-switch
-                  v-model="singleSelect"
-                  label="Single select"
-                  class="pa-3"
-                ></v-switch>
+                <v-subheader>All Participations</v-subheader>
               </template>
             </v-data-table>
           </template>
-
         </v-container>
+
       </v-main>
 
       <!-- Footer -->
@@ -65,10 +96,10 @@
       data () {
         return {
           userRole: "{{ $user->role }}",
-          items: @json($participations),
-          singleSelect: false,
-          selected: [],
-          headers: [
+          participationItems: @json($participations),
+          eventItems: @json($events),
+          selectedEvent: null,
+          headersForParticipations: [
             {
               text: 'ID',
               align: 'start',
@@ -77,18 +108,38 @@
             },
             { text: 'Participant ID', value: 'user_id' },
             { text: 'Participant Name', value: 'user.name' },
+            { text: 'Participant Name', value: 'user.email' },
             { text: 'Event Title', value: 'event.title' },
           ],
-          headersForParticipant: [
+          headersForEvents: [
             {
               text: 'ID',
               align: 'start',
               sortable: false,
               value: 'id',
             },
-            { text: 'Event ID', value: 'event_id' },
+            { text: 'Event Title', value: 'title' },
+            { text: 'Select', value: 'actions' },
           ],
         }
+      },
+
+      computed: {
+        selectedEventTitle () {
+          return this.selectedEvent ? this.selectedEvent.title : ''
+        },
+        selectedEventParticipationItems () {
+          var items = []
+          if (this.selectedEvent) {
+            for (var i = 0; i < this.participationItems.length; i++) {
+              var participationItem = this.participationItems[i]
+              if (participationItem.event.id == this.selectedEvent.id) {
+                items.push(participationItem)
+              }
+            }
+          }
+          return items
+        },
       },
 
       methods: {

@@ -511,7 +511,8 @@
         },
         isParticipatedByUser (item) {
           for (var i = 0; i < item.participations.length; i++) {
-            if (item.participations[i].user_id == this.loggedInUserId) {
+            var participation = item.participations[i]
+            if (participation.user_id == this.loggedInUserId) {
               return true
             }
           }

@@ -26,22 +26,14 @@ class ParticipationsController extends Controller
             $participations = Participation::with(['user', 'event'])->whereHas('Event', function ($query) use ($user) {
                 return $query->where('user_id', $user->id);
             })->get();
+            $events = Event::where('user_id', $user->id)->get();
         }
 
         return view('participations.index', [
             'user' => $user,
             'participations' => $participations,
+            'events' => $events,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -74,29 +66,6 @@ class ParticipationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Participation $participation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Participation  $participation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Participation $participation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Participation  $participation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Participation $participation)
     {
         //
     }
