@@ -50,29 +50,12 @@
                   class="elevation-3"
                 >
                   <template v-slot:top>
-                    <v-subheader>Participations In @{{ selectedEventTitle }}</v-subheader>
+                    <v-subheader>@{{ selectedEventTitle }}</v-subheader>
                   </template>
                 </v-data-table>
               </template>
             </v-col>
           </v-row>
-        </v-container>
-
-        <v-container fluid>
-          <template v-if="userRole == 'participant'">
-          </template>
-          <!-- All Participations Data Table -->
-          <template v-if="userRole == 'organizer'">
-            <v-data-table
-              :headers="headersForParticipations"
-              :items="participationItems"
-              class="elevation-3"
-            >
-              <template v-slot:top>
-                <v-subheader>All Participations</v-subheader>
-              </template>
-            </v-data-table>
-          </template>
         </v-container>
 
       </v-main>
@@ -126,7 +109,7 @@
 
       computed: {
         selectedEventTitle () {
-          return this.selectedEvent ? this.selectedEvent.title : ''
+          return this.selectedEvent ? 'Event: ' + this.selectedEvent.title : 'All'
         },
         selectedEventParticipationItems () {
           var items = []
@@ -137,6 +120,8 @@
                 items.push(participationItem)
               }
             }
+          } else {
+            items = this.participationItems
           }
           return items
         },
