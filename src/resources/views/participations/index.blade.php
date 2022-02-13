@@ -26,7 +26,10 @@
             class="mx-auto"
             v-if="userRole == 'participant'"
           >
-            <v-list three-line>
+            <v-list
+              three-line
+              v-if="participationItems.length > 0"
+            >
               <template v-for="(item, index) in participationItems">
                 <v-list-item
                   :key="item.id"

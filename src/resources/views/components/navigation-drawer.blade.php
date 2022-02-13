@@ -5,6 +5,10 @@
         <v-list-item-avatar>
           <v-icon>mdi-account</v-icon>
         </v-list-item-avatar>
+        <v-switch
+          v-model="$vuetify.theme.dark"
+          label="Theme"
+        ></v-switch>
       </v-list-item>
       <v-list-item>
         <v-list-item-content>

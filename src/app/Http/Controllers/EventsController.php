@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\EventFile;
+use App\Models\Participation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,8 @@ class EventsController extends Controller
         if ($user->cannot('delete', $event)) {
             abort(403);
         }
+
+        Participation::where('event_id', $event->id)->delete();
 
         $event->delete();
     }

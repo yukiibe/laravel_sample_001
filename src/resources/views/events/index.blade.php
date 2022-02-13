@@ -130,14 +130,15 @@
                       >
                         Description More
                       </v-btn>
-                      <v-btn
-                        style="text-transform: none"
+                      <v-chip
+                        class="ma-2"
                         color="pink lighten-1"
-                        @click="participate(item)"
+                        text-color="white"
                         v-if="!isParticipatedByUser(item)"
+                        @click="participate(item)"
                       >
                         Participate
-                      </v-btn>
+                      </v-chip>
                       <v-chip
                         class="ma-2"
                         color="indigo"
