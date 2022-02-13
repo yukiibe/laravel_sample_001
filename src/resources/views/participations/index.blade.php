@@ -21,22 +21,32 @@
 
         <v-container fluid>
 
-          <v-row v-if="userRole == 'participant'">
-            <!-- Participation Data Table -->
-            <v-col cols="12">
-              <template>
-                <v-data-table
-                  :headers="headersForParticipantParticipations"
-                  :items="participationItems"
-                  class="elevation-3"
+          <!-- Participation Card -->
+          <v-card
+            class="mx-auto"
+            v-if="userRole == 'participant'"
+          >
+            <v-list three-line>
+              <template v-for="item in participationItems">
+                <v-list-item
+                  :key="item.id"
+                  link
+                  @click="showParticipation(item)"
                 >
-                  <template v-slot:top>
-                    <v-subheader>All Participations</v-subheader>
-                  </template>
-                </v-data-table>
+                  <v-list-item-content>
+                    <v-list-item-title>@{{ item.id }}. @{{ item.event.title }}</v-list-item-title>
+                    <v-list-item-subtitle>
+                      Place：@{{ item.event.place }}<br>
+                      Fee：@{{ item.event.fee }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
               </template>
-            </v-col>
-          </v-row>
+            </v-list>
+          </v-card>
 
           <v-row v-if="userRole == 'organizer'">
             <!-- Events Data Table -->
@@ -63,7 +73,7 @@
             <v-col cols="8">
               <template>
                 <v-data-table
-                  :headers="headersForParticipations"
+                  :headers="headersForOrganizerParticipations"
                   :items="selectedEventParticipationItems"
                   class="elevation-3"
                 >
@@ -109,7 +119,7 @@
             },
             { text: 'Event Title', value: 'event.title' },
           ],
-          headersForParticipations: [
+          headersForOrganizerParticipations: [
             {
               text: 'Participation ID',
               align: 'start',
@@ -160,6 +170,9 @@
             _token: "{{ csrf_token() }}"
           })
           location.reload()
+        },
+        showParticipation (item) {
+          location.href = '/participations/' + item.id
         },
       },
 

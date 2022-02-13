@@ -26,17 +26,14 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/events',[EventsController::class, 'index'])->name('events.index');
-    Route::get('/events/create',[EventsController::class, 'create'])->name('events.create');
     Route::post('/events',[EventsController::class, 'store'])->name('events.store');
-    Route::get('/events/{event}',[EventsController::class, 'show'])->name('events.show');
-    Route::get('/events/{event}/edit',[EventsController::class, 'edit'])->name('events.edit');
-    Route::put('/events/{event}',[EventsController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}',[EventsController::class, 'destroy'])->name('events.destroy');
 });
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/participations',[ParticipationsController::class, 'index'])->name('participations.index');
     Route::post('/participations',[ParticipationsController::class, 'store'])->name('participations.store');
+    Route::get('/participations/{participation}',[ParticipationsController::class, 'show'])->name('participations.show');
 });
 
 Route::group(['middleware' => ['auth']], function () {
