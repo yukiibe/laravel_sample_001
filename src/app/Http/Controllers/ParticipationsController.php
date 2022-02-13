@@ -54,9 +54,20 @@ class ParticipationsController extends Controller
 
         $participations = Participation::with('event')->where('user_id', $user->id)->get();
 
+        $events = '';
+        if ($user->role == 'participant') {
+            $participations = Participation::with('event')->where('user_id', $user->id)->get();
+        } else if ($user->role == 'organizer') {
+            $participations = Participation::with(['user', 'event'])->whereHas('Event', function ($query) use ($user) {
+                return $query->where('user_id', $user->id);
+            })->get();
+            $events = Event::where('user_id', $user->id)->get();
+        }
+
         return view('participations.index', [
             'user' => $user,
             'participations' => $participations,
+            'events' => $events,
         ]);
     }
 
@@ -68,7 +79,14 @@ class ParticipationsController extends Controller
      */
     public function show(Participation $participation)
     {
-        //
+        $user = User::find(Auth::id());
+
+        return view('participations.show', [
+            'user' => $user,
+            'participation' => $participation,
+            'event' => $participation->event,
+            'event_file' => $participation->event->eventFile,
+        ]);
     }
 
     /**
@@ -79,6 +97,6 @@ class ParticipationsController extends Controller
      */
     public function destroy(Participation $participation)
     {
-        //
+        $participation->delete();
     }
 }

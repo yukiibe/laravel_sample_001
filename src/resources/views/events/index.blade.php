@@ -426,8 +426,7 @@
               published: this.editedItem.published
             })
             .then(function (response) {
-              this.close()
-              location.reload()
+              location.href = '/events'
             })
           } else {
             await axios.post('/events/', {
@@ -438,7 +437,7 @@
               published: this.editedItem.published
             })
             .then(function (response) {
-              location.reload()
+              location.href = '/events'
             })
           }
         },
@@ -449,7 +448,7 @@
         async confirmDelete () {
           await axios.delete('/events/' + this.editedItem.id)
             .then(function (response) {
-              location.reload()
+              location.href = '/events'
             })
         },
         participate (item) {
@@ -461,7 +460,7 @@
             event_id: this.editedItem.id,
           })
           .then(function (response) {
-            location.reload()
+            location.href = '/events'
           })
         },
         close () {
@@ -493,7 +492,7 @@
           formData.append('file', this.selectedFile)
           await axios.post('/event_files/' + item.event_file.id + '/upload', formData, config)
             .then(function (response) {
-              location.reload()
+              location.href = '/events'
             })
         },
         deleteFileItem (item) {
@@ -506,7 +505,7 @@
         async confirmFileDelete () {
           await axios.post('/event_files/' + this.editedFileItem.event_file.id + '/delete')
             .then(function (response) {
-              location.reload()
+              location.href = '/events'
             })
         },
         isParticipatedByUser (item) {

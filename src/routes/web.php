@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/participations',[ParticipationsController::class, 'index'])->name('participations.index');
     Route::post('/participations',[ParticipationsController::class, 'store'])->name('participations.store');
     Route::get('/participations/{participation}',[ParticipationsController::class, 'show'])->name('participations.show');
+    Route::delete('/participations/{participation}', [ParticipationsController::class, 'destroy'])->name('participations.destroy');
 });
 
 Route::group(['middleware' => ['auth']], function () {

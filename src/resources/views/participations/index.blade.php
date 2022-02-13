@@ -41,9 +41,7 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-
                 <v-divider></v-divider>
-
               </template>
             </v-list>
           </v-card>
