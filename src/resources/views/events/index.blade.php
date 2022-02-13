@@ -38,7 +38,8 @@
                 <v-col
                   v-for="item in items"
                   :key="item.id"
-                  cols="4"
+                  xs="12"
+                  md="4"
                 >
                   <v-card
                     class="mx-auto"
@@ -47,8 +48,9 @@
                     elevation="4"
                   >
                     <v-img
-                      class="align-end"
+                      class="mx-auto align-end"
                       height="250"
+                      width="520"
                       :src="filePath(item)"
                     ></v-img>
                     <v-card-title>@{{ item.title }}</v-card-title>
@@ -174,7 +176,6 @@
                     <v-row>
                       <v-col
                         cols="12"
-                        sm="6"
                       >
                         <v-text-field
                           v-model="editedItem.title"
