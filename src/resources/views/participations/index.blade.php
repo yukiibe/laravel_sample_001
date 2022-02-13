@@ -27,14 +27,14 @@
             v-if="userRole == 'participant'"
           >
             <v-list three-line>
-              <template v-for="item in participationItems">
+              <template v-for="(item, index) in participationItems">
                 <v-list-item
                   :key="item.id"
                   link
                   @click="showParticipation(item)"
                 >
                   <v-list-item-content>
-                    <v-list-item-title>@{{ item.id }}. @{{ item.event.title }}</v-list-item-title>
+                    <v-list-item-title>@{{ index + 1 }}. @{{ item.event.title }}</v-list-item-title>
                     <v-list-item-subtitle>
                       Place：@{{ item.event.place }}<br>
                       Fee：@{{ item.event.fee }}
