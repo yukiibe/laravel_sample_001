@@ -46,6 +46,9 @@ class ParticipationsController extends Controller
     public function store(Request $request)
     {
         $user = User::find(Auth::id());
+        if ($user->cannot('create', Participation::class)) {
+            abort(403);
+        }
 
         $participation = new Participation;
         $participation->user_id = $user->id;
@@ -63,12 +66,6 @@ class ParticipationsController extends Controller
             })->get();
             $events = Event::where('user_id', $user->id)->get();
         }
-
-        return view('participations.index', [
-            'user' => $user,
-            'participations' => $participations,
-            'events' => $events,
-        ]);
     }
 
     /**
@@ -80,6 +77,9 @@ class ParticipationsController extends Controller
     public function show(Participation $participation)
     {
         $user = User::find(Auth::id());
+        if ($user->cannot('view', $participation)) {
+            abort(403);
+        }
 
         return view('participations.show', [
             'user' => $user,
@@ -97,6 +97,11 @@ class ParticipationsController extends Controller
      */
     public function destroy(Participation $participation)
     {
+        $user = User::find(Auth::id());
+        if ($user->cannot('delete', $participation)) {
+            abort(403);
+        }
+
         $participation->delete();
     }
 }
