@@ -460,6 +460,7 @@
         async confirmParticipate () {
           await axios.post('/participations/', {
             event_id: this.editedItem.id,
+            user_id: this.loggedInUserId,
           })
           .then(function (response) {
             location.href = '/events'

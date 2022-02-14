@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Participation;
 use App\Models\User;
+use App\Rules\UniqueParticipationToEventByUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -49,6 +50,10 @@ class ParticipationsController extends Controller
         if ($user->cannot('create', Participation::class)) {
             abort(403);
         }
+
+        $request->validate([
+            'event_id' => [new UniqueParticipationToEventByUser],
+        ]);
 
         $participation = new Participation;
         $participation->user_id = $user->id;
