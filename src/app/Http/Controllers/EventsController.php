@@ -78,8 +78,6 @@ class EventsController extends Controller
         $event->fee = $request->fee;
         $event->published = $request->published;
         $event->save();
-
-        $events = $user->events;
     }
 
     /**

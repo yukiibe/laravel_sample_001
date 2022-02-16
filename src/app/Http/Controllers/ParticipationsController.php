@@ -59,18 +59,6 @@ class ParticipationsController extends Controller
         $participation->user_id = $user->id;
         $participation->event_id = $request->event_id;
         $participation->save();
-
-        $participations = Participation::with('event')->where('user_id', $user->id)->get();
-
-        $events = '';
-        if ($user->role == 'participant') {
-            $participations = Participation::with('event')->where('user_id', $user->id)->get();
-        } else if ($user->role == 'organizer') {
-            $participations = Participation::with(['user', 'event'])->whereHas('Event', function ($query) use ($user) {
-                return $query->where('user_id', $user->id);
-            })->get();
-            $events = Event::where('user_id', $user->id)->get();
-        }
     }
 
     /**
