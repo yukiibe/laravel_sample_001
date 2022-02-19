@@ -62,6 +62,6 @@ class UniqueParticipationToEventByUser implements Rule
      */
     public function message()
     {
-        return 'Can not participate the event that is already participated.';
+        return 'Can not participate the event by the same user.';
     }
 }
