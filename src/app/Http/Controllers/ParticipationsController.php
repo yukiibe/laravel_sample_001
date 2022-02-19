@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ParticipationCompleted;
 use App\Models\Event;
 use App\Models\Participation;
 use App\Models\User;
@@ -9,6 +10,7 @@ use App\Rules\UniqueParticipationToEventByUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ParticipationsController extends Controller
 {
@@ -59,6 +61,8 @@ class ParticipationsController extends Controller
         $participation->user_id = $user->id;
         $participation->event_id = $request->event_id;
         $participation->save();
+
+        Mail::to($user)->send(new ParticipationCompleted($participation));
     }
 
     /**
