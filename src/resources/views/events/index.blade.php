@@ -26,7 +26,7 @@
               class="ma-2"
               style="text-transform: none"
               color="success"
-              @click="dialog = true"
+              @click="dialogForm = true"
               v-if="userRole == 'organizer'"
             >
               New Event
@@ -167,72 +167,90 @@
 
             <!-- Form Dialog -->
             <v-dialog
-              v-model="dialog"
+              v-model="dialogForm"
               max-width="500px"
             >
               <v-card>
                 <v-card-title><span class="text-h5">@{{ formTitle }}</span></v-card-title>
                 <v-card-text>
                   <v-container>
-                    <v-row>
-                      <v-col
-                        cols="12"
-                      >
-                        <v-text-field
-                          v-model="editedItem.title"
-                          name="title"
-                          label="Title"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                      >
-                        <v-textarea
-                          v-model="editedItem.description"
-                          name="description"
-                          label="Description"
-                          rows="4"
-                          row-height="30"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="6"
-                      >
-                        <v-text-field
-                          v-model="editedItem.place"
-                          name="place"
-                          label="Place"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="6"
-                      >
-                        <v-text-field
-                          v-model="editedItem.fee"
-                          name="fee"
-                          label="Fee"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                      >
-                        <v-radio-group
-                          v-model="editedItem.published"
-                          row
+                    <v-form
+                      ref="form"
+                      v-model="valid"
+                    >
+                      <v-row>
+                        <v-col
+                          cols="12"
                         >
-                          <v-radio
-                            label="Unpublish"
-                            name="published"
-                            :value="0"
-                          ></v-radio>
-                          <v-radio
-                            label="Publish"
-                            name="published"
-                            :value="1"
-                          ></v-radio>
-                        </v-radio-group>
-                      </v-col>
-                    </v-row>
+                          <v-text-field
+                            v-model="editedItem.title"
+                            name="title"
+                            label="Title"
+                            :counter="40"
+                            :rules="titleRules"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                        >
+                          <v-textarea
+                            v-model="editedItem.description"
+                            name="description"
+                            label="Description"
+                            rows="4"
+                            row-height="30"
+                            :rules="descriptionRules"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.place"
+                            name="place"
+                            label="Place"
+                            :counter="20"
+                            :rules="placeRules"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="6"
+                        >
+                          <v-text-field
+                            v-model="editedItem.fee"
+                            name="fee"
+                            label="Fee"
+                            :counter="10"
+                            :rules="feeRules"
+                            required
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                        >
+                          <v-radio-group
+                            v-model="editedItem.published"
+                            row
+                            :rules="publishedRules"
+                            required
+                          >
+                            <v-radio
+                              label="Unpublish"
+                              name="published"
+                              :value="0"
+                            ></v-radio>
+                            <v-radio
+                              label="Publish"
+                              name="published"
+                              :value="1"
+                            ></v-radio>
+                          </v-radio-group>
+                        </v-col>
+                      </v-row>
+                    </v-form>
                   </v-container>
                 </v-card-text>
                 <v-card-actions>
@@ -240,7 +258,7 @@
                   <v-btn
                     color="blue darken-1"
                     text
-                    @click="close"
+                    @click="dialogForm = false"
                   >
                     Cancel
                   </v-btn>
@@ -268,7 +286,7 @@
                     color="green darken-1"
                     style="text-transform: none"
                     text
-                    @click="close"
+                    @click="dialogParticipate = false"
                   >
                     No
                   </v-btn>
@@ -297,7 +315,7 @@
                     color="green darken-1"
                     style="text-transform: none"
                     text
-                    @click="close"
+                    @click="dialogDelete = false"
                   >
                     Cancel
                   </v-btn>
@@ -326,7 +344,7 @@
                     color="green darken-1"
                     style="text-transform: none"
                     text
-                    @click="close"
+                    @click="dialogFileDelete = false"
                   >
                     Cancel
                   </v-btn>
@@ -364,7 +382,7 @@
       data () {
         return {
           selectedFile: null,
-          dialog: false,
+          dialogForm: false,
           dialogParticipate: false,
           dialogDelete: false,
           dialogFileDelete: false,
@@ -395,7 +413,51 @@
             event_id: null,
             file: '',
           },
+          valid: true,
+          titleRules: [
+            v => !!v || 'Title is required',
+            v => v.length <= 40 || 'Title must be less than 40 characters',
+          ],
+          descriptionRules: [
+            v => !!v || 'Description is required',
+          ],
+          placeRules: [
+            v => !!v || 'Place is required',
+            v => v.length <= 20 || 'Title must be less than 20 characters',
+          ],
+          feeRules: [
+            v => !!v || 'Place is required',
+            v => v.length <= 10 || 'Title must be less than 10 characters',
+          ],
+          publishedRules: [
+            v => v == '' || 'Published is required',
+          ],
         }
+      },
+
+      watch: {
+        dialogForm: function (val) {
+          if (!val) {
+            this.editFlg = false
+            this.editedItem = this.defaultItem
+            this.$refs.form.resetValidation()
+          }
+        },
+        dialogParticipate: function (val) {
+          if (!val) {
+            this.editedItem = this.defaultItem
+          }
+        },
+        dialogDelete: function (val) {
+          if (!val) {
+            this.editedItem = this.defaultItem
+          }
+        },
+        dialogFileDelete: function (val) {
+          if (!val) {
+            this.editedFileItem = this.defaultFileItem
+          }
+        },
       },
 
       computed: {
@@ -416,31 +478,33 @@
         editItem (item) {
           this.editFlg = true
           this.editedItem = item
-          this.dialog = true
+          this.dialogForm = true
         },
         async save () {
-          if (this.editFlg) {
-            await axios.put('/events/' + this.editedItem.id, {
-              title: this.editedItem.title,
-              description: this.editedItem.description,
-              place: this.editedItem.place,
-              fee: this.editedItem.fee,
-              published: this.editedItem.published
-            })
-            .then(function (response) {
-              location.href = '/events'
-            })
-          } else {
-            await axios.post('/events/', {
-              title: this.editedItem.title,
-              description: this.editedItem.description,
-              place: this.editedItem.place,
-              fee: this.editedItem.fee,
-              published: this.editedItem.published
-            })
-            .then(function (response) {
-              location.href = '/events'
-            })
+          if (this.$refs.form.validate()) {
+            if (this.editFlg) {
+              await axios.put('/events/' + this.editedItem.id, {
+                title: this.editedItem.title,
+                description: this.editedItem.description,
+                place: this.editedItem.place,
+                fee: this.editedItem.fee,
+                published: this.editedItem.published
+              })
+              .then(function (response) {
+                location.href = '/events'
+              })
+            } else {
+              await axios.post('/events/', {
+                title: this.editedItem.title,
+                description: this.editedItem.description,
+                place: this.editedItem.place,
+                fee: this.editedItem.fee,
+                published: this.editedItem.published
+              })
+              .then(function (response) {
+                location.href = '/events'
+              })
+            }
           }
         },
         deleteItem (item) {
@@ -465,16 +529,6 @@
           .then(function (response) {
             location.href = '/events'
           })
-        },
-        close () {
-          this.dialog = false
-          this.dialogParticipate = false
-          this.dialogParticipated = false
-          this.dialogDelete = false
-          this.dialogFileDelete = false
-          this.editFlg = false
-          this.editedItem = this.defaultItem
-          this.editedFileItem = this.defaultFileItem
         },
         filePath (item) {
           return item.event_file.file ? item.event_file.file : '/storage/default-event.png';
