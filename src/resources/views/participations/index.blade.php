@@ -67,6 +67,9 @@
                       :value="item"
                     ></v-switch>
                   </template>
+                  <template v-slot:item.count="{ item }">
+                    @{{ item.participations.length }}
+                  </template>
                 </v-data-table>
               </template>
             </v-col>
@@ -141,6 +144,7 @@
             },
             { text: 'Event Title', value: 'title' },
             { text: 'Select', value: 'actions' },
+            { text: 'Count', value: 'count' },
           ],
         }
       },

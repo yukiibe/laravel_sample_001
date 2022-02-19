@@ -28,7 +28,7 @@ class ParticipationsController extends Controller
             $participations = Participation::with(['user', 'event'])->whereHas('Event', function ($query) use ($user) {
                 return $query->where('user_id', $user->id);
             })->get();
-            $events = Event::where('user_id', $user->id)->get();
+            $events = Event::with('participations')->where('user_id', $user->id)->get();
         }
 
         return view('participations.index', [
