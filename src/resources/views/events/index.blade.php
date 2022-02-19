@@ -200,6 +200,7 @@
                             label="Description"
                             rows="4"
                             row-height="30"
+                            counter
                             :rules="descriptionRules"
                             required
                           ></v-text-field>
@@ -234,8 +235,6 @@
                           <v-radio-group
                             v-model="editedItem.published"
                             row
-                            :rules="publishedRules"
-                            required
                           >
                             <v-radio
                               label="Unpublish"
@@ -428,9 +427,6 @@
           feeRules: [
             v => !!v || 'Place is required',
             v => v.length <= 10 || 'Title must be less than 10 characters',
-          ],
-          publishedRules: [
-            v => v == '' || 'Published is required',
           ],
         }
       },
