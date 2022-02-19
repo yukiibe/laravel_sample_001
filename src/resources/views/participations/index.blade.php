@@ -18,7 +18,6 @@
 
       <!-- Content -->
       <v-main>
-
         <v-container fluid>
 
           <!-- Participation Card -->
