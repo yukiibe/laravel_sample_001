@@ -98,7 +98,10 @@
                       </v-avatar>
                       Published
                     </v-chip>
-                    <v-card-text v-if="userRole == 'organizer'">@{{ item.description }}</v-card-text>
+                    <v-card-text
+                      v-if="userRole == 'organizer'"
+                      v-html="htmlText(item.description)">
+                    </v-card-text>
                     <v-card-actions v-if="userRole == 'organizer'">
                       <v-btn
                         color="teal lighten-3"
@@ -155,9 +158,7 @@
                     <v-expand-transition v-if="userRole == 'participant'">
                       <div v-show="show">
                         <v-divider></v-divider>
-                        <v-card-text>
-                          @{{ item.description }}
-                        </v-card-text>
+                        <v-card-text v-html="htmlText(item.description)"></v-card-text>
                       </div>
                     </v-expand-transition>
                   </v-card>
@@ -470,6 +471,9 @@
           .then(function (response) {
             location.reload()
           })
+        },
+        htmlText (text) {
+          return text.replace(/\r?\n/g, '<br>')
         },
         editItem (item) {
           this.editFlg = true

@@ -40,7 +40,7 @@
               </v-list-item-content>
             </v-list-item>
             <v-card-title>Description</v-card-title>
-            <v-card-text>@{{ event.description }}</v-card-text>
+            <v-card-text v-html="htmlText(event.description)"></v-card-text>
             <v-card-actions>
               <v-btn
                 color="error"
@@ -115,6 +115,9 @@
             _token: "{{ csrf_token() }}"
           })
           location.reload()
+        },
+        htmlText (text) {
+          return text.replace(/\r?\n/g, '<br>')
         },
         filePath (eventFile) {
           return eventFile.file ? eventFile.file : '/storage/default-event.png';
