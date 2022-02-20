@@ -1,66 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# イベント予約システム / Event Participation System
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+※このシステムはサンプル用に作成したものです。
 
-## About Laravel
+## __概要 / Summary__
+このイベント予約システムは、イベントの作成や編集、作成したイベントへ予約する機能などを提供する。<br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. [__機能 / Function__](#function)
+2. [__技術と環境 / Technology and Environment__](#technology-and-environment)
+3. [__モデルテーブル / Model Table__](#model-table)
+4. [__ルーティング / Routing__](#routing)
+5. [__イメージ / Image__](#image)
+6. [__課題 / Issue__](#issue)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<a id="function"></a>
+### 1. __機能 / Function__
+ユーザーには `organizer` 権限のユーザーと、 `participant` 権限のユーザーが用意されている。<br>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+■ Organizer権限のユーザーに提供する主な機能
+* イベントの作成、編集、削除
+* イベントの一覧の表示
+* 自分が作成したイベントに対する予約一覧の表示
 
-## Learning Laravel
+■ Participant権限のユーザーに提供する主な機能
+* イベントの一覧の表示
+* イベント予約の一覧の表示
+* イベントの予約、キャンセル
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<a id="technology-and-environment"></a>
+### 2. __技術と環境 / Technology and Environment__
+* Laravel 8
+* Vue（CDN）
+* Vuetify（CDN）
+* Docker for Desktop
+* Ubuntu
+* Visual Studio Code
+* Mailtrap
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<a id="model-table"></a>
+### 3. __モデルテーブル / Model Table__
 
-## Laravel Sponsors
+#### __Userモデル__
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+| Column | Type | Modifier |
+| ---- | ---- | ---- |
+| id | id | auto increment |
+| name | string ||
+| email | string | unique |
+| password | string ||
+| role | string | default 'participant' |
 
-### Premium Partners
+※その他は省略
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+#### __Eventモデル__
 
-## Contributing
+| Column | Type | Modifier |
+| ---- | ---- | ---- |
+| id | id | auto increment |
+| user_id | foreignId ||
+| title | string ||
+| description | string ||
+| place | string ||
+| fee | string ||
+| published | boolean | default 0 |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+※その他は省略
 
-## Code of Conduct
+#### __EventFileモデル__
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Column | Type | Modifier |
+| ---- | ---- | ---- |
+| id | id | auto increment |
+| event_id | foreignId ||
+| file | string | default '' |
 
-## Security Vulnerabilities
+#### __Participationモデル__
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Column | Type | Modifier |
+| ---- | ---- | ---- |
+| id | id | auto increment |
+| user_id | foreignId ||
+| event_id | foreignId ||
 
-## License
+※その他は省略
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<a id="routing"></a>
+### 4. __ルーティング / Routing__
+
+#### __Eventsに対する操作__
+
+| Verb | URI | Action | Route Name |
+| ---- | ---- | ---- | ---- |
+| GET | /events | index | events.index |
+| POST | /events | store | events.store |
+| PUT | /events/{event} | update | events.update |
+| DELETE | /events/{event} | destroy | events.destroy |
+
+#### __EventFilesに対する操作__
+
+| Verb | URI | Action | Route Name |
+| ---- | ---- | ---- | ---- |
+| POST | /event_files/{event_file}/upload | upload | event_files.upload |
+| POST | /event_files/{event_file}/delete | delete | event_files.delete |
+
+#### __Participationsに対する操作__
+
+| Verb | URI | Action | Route Name |
+| ---- | ---- | ---- | ---- |
+| GET | /participations | index | participations.index |
+| POST | /participations | store | participations.store |
+| GET | /participations/{participation} | show | participations.show |
+| DELETE | /participations/{participation} | destroy | participations.destroy |
+
+<a id="image"></a>
+### 5. __イメージ / Image__
+
+<a id="issue"></a>
+### 6. __課題 / Issue__
+
+課題や今後追加したい機能などを挙げる。
+
+* リマインダー機能。開催日時が設定されたイベントについて、参加したユーザーに対して前日などにリマインドメールを送信する。
+* LaravelのテンプレートエンジンにCDNのVueやVuetifyを埋め込んで使用している。本来ならSPAのようにVueとLaravelは別サーバで実装するのが理想。その場合、ページ操作などをすべてVueで請け負い、LaravelはAPIとして機能する。現在は同じサーバの想定で実装しており、Laravel側はRestful APIを意識しているが、前述の理由で厳密にはRestful APIの設計になっていない。DockerでVueが動く用のコンテナを新たに作成して実現したい。
+* イベントタグ機能。イベントにタグを設定することができ、イベント一覧表示では、イベントタグでイベントをソートできる。
