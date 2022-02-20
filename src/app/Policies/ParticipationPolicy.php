@@ -19,7 +19,7 @@ class ParticipationPolicy
      */
     public function view(User $user, Participation $participation)
     {
-        return $user->id == $participation->user_id;
+        return $user->role == 'participant' && $user->id == $participation->user_id;
     }
 
     /**

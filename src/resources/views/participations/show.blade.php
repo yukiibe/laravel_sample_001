@@ -101,7 +101,6 @@
 
       data () {
         return {
-          userRole: "{{ $user->role }}",
           participation: @json($participation),
           event: @json($event),
           eventFile: @json($event_file),
