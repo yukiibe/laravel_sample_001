@@ -37,13 +37,6 @@ services:
     ports:
       - 3306:3306
 
-  node:
-    image: node:16.4-alpine
-    tty: true
-    volumes:
-      - ./src:/var/www/vhosts/laravel-sample-001/:cached
-    working_dir: /var/www/vhosts/laravel-sample-001/
-
 volumes:
     mysql-data:
       driver: local
