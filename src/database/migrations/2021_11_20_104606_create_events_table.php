@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->foreignId('user_id');
             $table->string('title');
             $table->string('description')->nullable();
+            $table->dateTime('date')->nullable();
             $table->string('place')->nullable();
             $table->string('fee')->nullable();
             $table->boolean('published')->default(0);

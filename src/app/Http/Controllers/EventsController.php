@@ -51,6 +51,7 @@ class EventsController extends Controller
         $event->description = $request->description;
         $event->place = $request->place;
         $event->fee = $request->fee;
+        $event->date = $request->date;
         $event->published = $request->published;
         $event->save();
 
@@ -76,6 +77,7 @@ class EventsController extends Controller
         $event->description = $request->description;
         $event->place = $request->place;
         $event->fee = $request->fee;
+        $event->date = $request->date;
         $event->published = $request->published;
         $event->save();
     }

@@ -47,17 +47,36 @@
                     outlined
                     elevation="4"
                   >
+
                     <v-img
                       class="mx-auto align-end"
                       height="250"
                       width="520"
                       :src="filePath(item)"
-                    ></v-img>
-                    <v-card-title>@{{ item.title }}</v-card-title>
-                    <v-card-subtitle>
-                      Place：@{{ item.place }}<br>
-                      Fee：@{{ item.fee }}
-                    </v-card-subtitle>
+                    >
+                      <v-chip
+                        class="ma-2"
+                        color="indigo"
+                        text-color="white"
+                        v-if="userRole == 'organizer'"
+                      >
+                        <v-avatar>
+                          <v-icon>@{{ publishing(item) }}</v-icon>
+                        </v-avatar>
+                      </v-chip>
+                      <v-chip
+                        class="ma-2"
+                        color="indigo"
+                        text-color="white"
+                        v-if="userRole == 'participant' && isParticipatedByUser(item)"
+                      >
+                        <v-avatar left>
+                          <v-icon>mdi-checkbox-marked-circle</v-icon>
+                        </v-avatar>
+                        Participated
+                      </v-chip>
+                    </v-img>
+
                     <v-card-text v-if="userRole == 'organizer'">
                       <v-file-input
                         accept="image/png, image/jpeg, image/bmp"
@@ -86,18 +105,17 @@
                         Delete
                       </v-btn>
                     </v-card-text>
+
                     <v-divider></v-divider>
-                    <v-chip
-                      class="ma-2"
-                      color="indigo"
-                      text-color="white"
-                      v-if="userRole == 'organizer' && item.published"
-                    >
-                      <v-avatar left>
-                        <v-icon>mdi-checkbox-marked-circle</v-icon>
-                      </v-avatar>
-                      Published
-                    </v-chip>
+
+                    <v-card-title>@{{ item.title }}</v-card-title>
+                    <v-card-text>
+                      Place：@{{ item.place }}<br>
+                      Fee：@{{ item.fee }}<br>
+                      Date: @{{ item.date }}
+                    </v-card-text>
+
+                    <v-card-title v-if="userRole == 'organizer'">Description</v-card-title>
                     <v-card-text
                       v-if="userRole == 'organizer'"
                       v-html="htmlText(item.description)">
@@ -124,6 +142,7 @@
                         Delete
                       </v-btn>
                     </v-card-actions>
+
                     <v-card-actions v-else-if="userRole == 'participant'">
                       <v-btn
                         style="text-transform: none"
@@ -142,19 +161,9 @@
                       >
                         Participate
                       </v-chip>
-                      <v-chip
-                        class="ma-2"
-                        color="indigo"
-                        text-color="white"
-                        v-if="isParticipatedByUser(item)"
-                      >
-                        <v-avatar left>
-                          <v-icon>mdi-checkbox-marked-circle</v-icon>
-                        </v-avatar>
-                        Participated
-                      </v-chip>
                       <v-spacer></v-spacer>
                     </v-card-actions>
+
                     <v-expand-transition v-if="userRole == 'participant'">
                       <div v-show="show">
                         <v-divider></v-divider>
@@ -169,7 +178,7 @@
             <!-- Form Dialog -->
             <v-dialog
               v-model="dialogForm"
-              max-width="500px"
+              max-width="650px"
             >
               <v-card>
                 <v-card-title><span class="text-h5">@{{ formTitle }}</span></v-card-title>
@@ -229,6 +238,11 @@
                             :rules="feeRules"
                             required
                           ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                        >
+                          <v-date-picker v-model="editedItem.date"></v-date-picker>
                         </v-col>
                         <v-col
                           cols="12"
@@ -395,6 +409,7 @@
             title: '',
             description: '',
             place: '',
+            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             fee: 0,
             published: 0
           },
@@ -402,6 +417,7 @@
             title: '',
             description: '',
             place: '',
+            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             fee: 0,
             published: 0
           },
@@ -472,6 +488,9 @@
             location.reload()
           })
         },
+        publishing (item) {
+          return item.published == 1 ? 'mdi-lock-open-variant' : 'mdi-lock';
+        },
         htmlText (text) {
           return text.replace(/\r?\n/g, '<br>')
         },
@@ -488,6 +507,7 @@
                 description: this.editedItem.description,
                 place: this.editedItem.place,
                 fee: this.editedItem.fee,
+                date: this.editedItem.date,
                 published: this.editedItem.published
               })
               .then(function (response) {
@@ -499,6 +519,7 @@
                 description: this.editedItem.description,
                 place: this.editedItem.place,
                 fee: this.editedItem.fee,
+                date: this.editedItem.date,
                 published: this.editedItem.published
               })
               .then(function (response) {
