@@ -60,6 +60,9 @@
                   <template v-slot:top>
                     <v-subheader>Events</v-subheader>
                   </template>
+                  <template v-slot:item.date="{ item }">
+                    @{{ toDateFormat(item) }}
+                  </template>
                   <template v-slot:item.actions="{ item }">
                     <v-switch
                       v-model="selectedEvent"
@@ -142,6 +145,7 @@
               value: 'id',
             },
             { text: 'Event Title', value: 'title' },
+            { text: 'Event Date', value: 'date' },
             { text: 'Select', value: 'actions' },
             { text: 'Count', value: 'count' },
           ],
@@ -174,6 +178,10 @@
             _token: "{{ csrf_token() }}"
           })
           location.reload()
+        },
+        toDateFormat (item) {
+          var date = new Date(item.date)
+          return date.toISOString().substr(0,10)
         },
         showParticipation (item) {
           location.href = '/participations/' + item.id

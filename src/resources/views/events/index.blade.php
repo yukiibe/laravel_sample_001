@@ -112,7 +112,7 @@
                     <v-card-text>
                       Place：@{{ item.place }}<br>
                       Fee：@{{ item.fee }}<br>
-                      Date: @{{ item.date }}
+                      Date： @{{ toDateFormat(item) }}
                     </v-card-text>
 
                     <v-card-title v-if="userRole == 'organizer'">Description</v-card-title>
@@ -490,6 +490,10 @@
         },
         publishing (item) {
           return item.published == 1 ? 'mdi-lock-open-variant' : 'mdi-lock';
+        },
+        toDateFormat (item) {
+          var date = new Date(item.date)
+          return date.toISOString().substr(0,10)
         },
         htmlText (text) {
           return text.replace(/\r?\n/g, '<br>')
