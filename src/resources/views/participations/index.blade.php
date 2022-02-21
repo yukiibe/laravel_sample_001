@@ -38,8 +38,7 @@
                   <v-list-item-content>
                     <v-list-item-title>@{{ index + 1 }}. @{{ item.event.title }}</v-list-item-title>
                     <v-list-item-subtitle>
-                      Place：@{{ item.event.place }}<br>
-                      Fee：@{{ item.event.fee }}
+                      @{{ item.event.description }}<br>
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
@@ -61,7 +60,7 @@
                     <v-subheader>Events</v-subheader>
                   </template>
                   <template v-slot:item.date="{ item }">
-                    @{{ toDateFormat(item) }}
+                    @{{ toDateFormat(item.date) }}
                   </template>
                   <template v-slot:item.actions="{ item }">
                     <v-switch
@@ -179,8 +178,8 @@
           })
           location.reload()
         },
-        toDateFormat (item) {
-          var date = new Date(item.date)
+        toDateFormat (eventDate) {
+          var date = new Date(eventDate)
           return date.toISOString().substr(0,10)
         },
         showParticipation (item) {
