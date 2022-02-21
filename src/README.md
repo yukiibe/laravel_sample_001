@@ -5,16 +5,29 @@
 ## __概要 / Summary__
 このイベント予約システムは、イベントの作成や編集、作成したイベントへ予約する機能などを提供する。<br>
 
-1. [__機能 / Function__](#function)
-2. [__技術と環境 / Technology and Environment__](#technology-and-environment)
+1. [__技術と環境 / Technology and Environment__](#technology-and-environment)
+2. [__機能 / Function__](#function)
 3. [__モデルテーブル / Model Table__](#model-table)
 4. [__ルーティング / Routing__](#routing)
 5. [__イメージ / Image__](#image)
 6. [__課題 / Issue__](#issue)
 
+
+<a id="technology-and-environment"></a>
+### 1. __技術と環境 / Technology and Environment__
+---
+* Laravel 8
+* Vue（CDN）
+* Vuetify（CDN）
+* Docker for Desktop
+* Ubuntu
+* Visual Studio Code
+* Mailtrap
+
 <a id="function"></a>
-### 1. __機能 / Function__
-ユーザーには `organizer` 権限のユーザーと、 `participant` 権限のユーザーが用意されている。<br>
+### 2. __機能 / Function__
+---
+ユーザーには `organizer` 権限か、 `participant` 権限が用意されている。<br>
 
 ■ Organizer権限のユーザーに提供する主な機能
 * イベントの作成、編集、削除
@@ -26,18 +39,17 @@
 * イベント予約の一覧の表示
 * イベントの予約、キャンセル
 
-<a id="technology-and-environment"></a>
-### 2. __技術と環境 / Technology and Environment__
-* Laravel 8
-* Vue（CDN）
-* Vuetify（CDN）
-* Docker for Desktop
-* Ubuntu
-* Visual Studio Code
-* Mailtrap
+■ URL
+| Function | URL | Description |
+| ---- | ---- | ---- |
+| 新規登録 | http://localhost/register | organizer か participant を選択して登録 |
+| ログイン | http://localhost/login ||
+| イベント一覧 | http://localhost/events ||
+| 予約一覧 | http://localhost/participations ||
 
 <a id="model-table"></a>
 ### 3. __モデルテーブル / Model Table__
+---
 
 #### __Userモデル__
 
@@ -85,6 +97,7 @@
 
 <a id="routing"></a>
 ### 4. __ルーティング / Routing__
+---
 
 #### __Eventsに対する操作__
 
@@ -113,9 +126,11 @@
 
 <a id="image"></a>
 ### 5. __イメージ / Image__
+---
 
 <a id="issue"></a>
 ### 6. __課題 / Issue__
+---
 
 課題や今後追加したい機能などを挙げる。
 
