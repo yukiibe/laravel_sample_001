@@ -180,7 +180,7 @@
         },
         toDateFormat (eventDate) {
           var date = new Date(eventDate)
-          return date.toISOString().substr(0,10)
+          return date.toString().substr(0,15)
         },
         showParticipation (item) {
           location.href = '/participations/' + item.id

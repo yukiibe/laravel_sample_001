@@ -493,7 +493,7 @@
         },
         toDateFormat (eventDate) {
           var date = new Date(eventDate)
-          return date.toISOString().substr(0,10)
+          return date.toString().substr(0,15)
         },
         htmlText (text) {
           return text.replace(/\r?\n/g, '<br>')
