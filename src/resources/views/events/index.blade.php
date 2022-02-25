@@ -242,7 +242,47 @@
                         <v-col
                           cols="12"
                         >
-                          <v-date-picker v-model="editedItem.date"></v-date-picker>
+                          <v-menu
+                            ref="menu"
+                            v-model="menu"
+                            :close-on-content-click="false"
+                            :return-value.sync="editedItem.date"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                          >
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-text-field
+                                v-model="editedItem.date"
+                                label="Event Date"
+                                prepend-icon="mdi-calendar"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                              ></v-text-field>
+                            </template>
+                            <v-date-picker
+                              v-model="editedItem.date"
+                              no-title
+                              scrollable
+                            >
+                              <v-spacer></v-spacer>
+                              <v-btn
+                                text
+                                color="primary"
+                                @click="menu = false"
+                              >
+                                Cancel
+                              </v-btn>
+                              <v-btn
+                                text
+                                color="primary"
+                                @click="$refs.menu.save(editedItem.date)"
+                              >
+                                OK
+                              </v-btn>
+                            </v-date-picker>
+                          </v-menu>
                         </v-col>
                         <v-col
                           cols="12"
@@ -403,6 +443,7 @@
           dialogDelete: false,
           dialogFileDelete: false,
           show: false,
+          menu: false,
           loading: false,
           userRole: "{{ $user->role }}",
           loggedInUserId: "{{ $user->id }}",
@@ -412,7 +453,7 @@
             title: '',
             description: '',
             place: '',
-            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            date: null,
             fee: 0,
             published: 0
           },
@@ -420,7 +461,7 @@
             title: '',
             description: '',
             place: '',
-            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            date: null,
             fee: 0,
             published: 0
           },
@@ -456,6 +497,7 @@
           if (!val) {
             this.editFlg = false
             this.editedItem = this.defaultItem
+            this.editedItem.date = null
             this.$refs.form.resetValidation()
           }
         },
