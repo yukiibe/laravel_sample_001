@@ -112,7 +112,7 @@
                     <v-card-text>
                       Place：@{{ item.place }}<br>
                       Fee：@{{ item.fee }}<br>
-                      Date：@{{ toDateFormat(item.date) }}
+                      Date：@{{ item.date }}
                     </v-card-text>
 
                     <v-card-title v-if="userRole == 'organizer'">Description</v-card-title>
@@ -504,11 +504,14 @@
         dialogParticipate: function (val) {
           if (!val) {
             this.editedItem = this.defaultItem
+            this.editedItem.date = null
           }
         },
         dialogDelete: function (val) {
           if (!val) {
             this.editedItem = this.defaultItem
+            this.editedItem.date = null
+            this.$refs.form.resetValidation()
           }
         },
         dialogFileDelete: function (val) {
@@ -535,10 +538,6 @@
         },
         publishing (item) {
           return item.published == 1 ? 'mdi-lock-open-variant' : 'mdi-lock';
-        },
-        toDateFormat (eventDate) {
-          var date = new Date(eventDate)
-          return date.toString().substr(0,15)
         },
         htmlText (text) {
           return text.replace(/\r?\n/g, '<br>')

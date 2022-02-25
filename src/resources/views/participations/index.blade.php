@@ -60,7 +60,7 @@
                     <v-subheader>Events</v-subheader>
                   </template>
                   <template v-slot:item.date="{ item }">
-                    @{{ toDateFormat(item.date) }}
+                    @{{ item.date }}
                   </template>
                   <template v-slot:item.actions="{ item }">
                     <v-switch
@@ -177,10 +177,6 @@
             _token: "{{ csrf_token() }}"
           })
           location.reload()
-        },
-        toDateFormat (eventDate) {
-          var date = new Date(eventDate)
-          return date.toString().substr(0,15)
         },
         showParticipation (item) {
           location.href = '/participations/' + item.id

@@ -37,7 +37,7 @@
                 </v-list-item-title>
                 <v-list-item-subtitle>Place：@{{ event.place }}</v-list-item-subtitle>
                 <v-list-item-subtitle>Fee：@{{ event.fee }}</v-list-item-subtitle>
-                <v-list-item-subtitle>Date：@{{ toDateFormat(event.date) }}</v-list-item-subtitle>
+                <v-list-item-subtitle>Date：@{{ event.date }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-card-title>Description</v-card-title>
@@ -115,10 +115,6 @@
             _token: "{{ csrf_token() }}"
           })
           location.reload()
-        },
-        toDateFormat (eventDate) {
-          var date = new Date(eventDate)
-          return date.toString().substr(0,15)
         },
         htmlText (text) {
           return text.replace(/\r?\n/g, '<br>')
