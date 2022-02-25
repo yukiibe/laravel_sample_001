@@ -196,7 +196,7 @@
                             v-model="editedItem.title"
                             name="title"
                             label="Title"
-                            :counter="40"
+                            :counter="60"
                             :rules="titleRules"
                             required
                           ></v-text-field>
@@ -222,7 +222,7 @@
                             v-model="editedItem.place"
                             name="place"
                             label="Place"
-                            :counter="20"
+                            :counter="40"
                             :rules="placeRules"
                             required
                           ></v-text-field>
@@ -476,14 +476,14 @@
           valid: true,
           titleRules: [
             v => !!v || 'Title is required',
-            v => v.length <= 40 || 'Title must be less than 40 characters',
+            v => v.length <= 60 || 'Title must be less than 40 characters',
           ],
           descriptionRules: [
             v => !!v || 'Description is required',
           ],
           placeRules: [
             v => !!v || 'Place is required',
-            v => v.length <= 20 || 'Title must be less than 20 characters',
+            v => v.length <= 40 || 'Title must be less than 20 characters',
           ],
           feeRules: [
             v => !!v || 'Place is required',

@@ -71,6 +71,7 @@
 | user_id | foreignId ||
 | title | string ||
 | description | string ||
+| date | date ||
 | place | string ||
 | fee | string ||
 | published | boolean | default 0 |
@@ -137,3 +138,4 @@
 * リマインダー機能。開催日時が設定されたイベントについて、参加したユーザーに対して前日などにリマインドメールを送信する。
 * LaravelのテンプレートエンジンにCDNのVueやVuetifyを埋め込んで使用している。本来ならSPAのようにVueとLaravelは別サーバで実装するのが理想。その場合、ページ操作などをすべてVueで請け負い、LaravelはAPIとして機能する。現在は同じサーバの想定で実装しており、Laravel側はRestful APIを意識しているが、前述の理由で厳密にはRestful APIの設計になっていない。DockerでVueが動く用のコンテナを新たに作成して実現したい。
 * イベントタグ機能。イベントにタグを設定することができ、イベント一覧表示では、イベントタグでイベントをソートできる。
+* ナビゲーションドロワーの見直し。今は大きいディスプレイを想定したドロワーになっている。普通のPCの画面サイズだと、けっこう窮屈な感じになる。

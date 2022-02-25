@@ -49,7 +49,10 @@
 
           <v-row v-if="userRole == 'organizer'">
             <!-- Events Data Table -->
-            <v-col cols="4">
+            <v-col
+              xs="12"
+              md="4"
+            >
               <template>
                 <v-data-table
                   :headers="headersForEvents"
@@ -75,7 +78,10 @@
               </template>
             </v-col>
             <!-- Participation Data Table -->
-            <v-col cols="8">
+            <v-col
+              xs="12"
+              md="8"
+            >
               <template>
                 <v-data-table
                   :headers="headersForOrganizerParticipations"
