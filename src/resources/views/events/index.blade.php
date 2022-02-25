@@ -308,6 +308,8 @@
                     color="green darken-1"
                     style="text-transform: none"
                     text
+                    :loading="loading"
+                    :disabled="loading"
                     @click="confirmParticipate"
                   >
                     Yes
@@ -401,6 +403,7 @@
           dialogDelete: false,
           dialogFileDelete: false,
           show: false,
+          loading: false,
           userRole: "{{ $user->role }}",
           loggedInUserId: "{{ $user->id }}",
           items: @json($events),
@@ -547,11 +550,13 @@
           this.dialogParticipate = true
         },
         async confirmParticipate () {
+          this.loading = true
           await axios.post('/participations/', {
             event_id: this.editedItem.id,
             user_id: this.loggedInUserId,
           })
           .then(function (response) {
+            this.loading = false
             location.href = '/events'
           })
         },
