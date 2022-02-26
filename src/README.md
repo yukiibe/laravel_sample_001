@@ -1,9 +1,10 @@
-# イベント予約システム / Event Participation System
+# イベント管理・予約システム / Event Management and Participation System
 
 ※このシステムはサンプル用に作成したものです。
 
 ## __概要 / Summary__
-このイベント予約システムは、イベントの作成や編集、作成したイベントへ予約する機能などを提供する。<br>
+このイベント管理・予約システムは、イベントの作成や編集、作成したイベントへ予約する機能などを提供する。<br>
+また、予約データの管理機能を提供する。
 
 1. [__技術と環境 / Technology and Environment__](#technology-and-environment)
 2. [__機能 / Function__](#function)
