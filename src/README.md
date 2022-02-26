@@ -130,6 +130,14 @@
 ### 5. __イメージ / Image__
 ---
 
+#### __新規登録__
+
+![image](https://user-images.githubusercontent.com/67403029/155844997-2dd6d33f-2fe5-4652-968e-2cc68bf3f323.png)
+
+#### __ログイン__
+
+![image](https://user-images.githubusercontent.com/67403029/155844980-0d260d41-2d74-4835-b371-18a4da3abdd6.png)
+
 #### __イベント一覧（Organizer）__
 
 ![image](https://user-images.githubusercontent.com/67403029/155843944-ec39969d-6779-4e89-bccd-b0f3d0104f3e.png)
