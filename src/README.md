@@ -103,6 +103,20 @@ https://github.com/yukiibe/laravel_sample_001/blob/main/docker/php/Dockerfile
 
 ※その他は省略
 
+#### __定義しているモデルのリレーション__
+
+1. User → https://github.com/yukiibe/laravel_sample_001/blob/main/src/app/Models/User.php<br>
+User:Event = 1:n<br>
+User:Participaiton = 1:n<br>
+
+2. Event → https://github.com/yukiibe/laravel_sample_001/blob/main/src/app/Models/Event.php<br>
+Event:Participation = 1:n<br>
+Event:EventFile = 1:1<br>
+
+3. Participation → https://github.com/yukiibe/laravel_sample_001/blob/main/src/app/Models/Participation.php<br>
+Participation:User = n:1<br>
+Participation:Event = n:1<br>
+
 <a id="routing"></a>
 ### 4. __ルーティング / Routing__
 ---
