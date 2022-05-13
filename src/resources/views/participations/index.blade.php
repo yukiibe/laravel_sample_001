@@ -5,9 +5,10 @@
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <style>[v-cloak]{display: none;}</style>
 </head>
 <body>
-  <div id="app">
+  <div id="app" v-cloak>
     <v-app>
 
       <!-- Navigation Drawer -->
