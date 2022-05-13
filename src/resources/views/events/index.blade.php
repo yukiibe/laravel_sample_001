@@ -497,21 +497,18 @@
         dialogForm: function (val) {
           if (!val) {
             this.editFlg = false
-            this.editedItem = this.defaultItem
-            this.editedItem.date = null
+            Object.assign(this.editedItem, this.defaultItem);
             this.$refs.form.resetValidation()
           }
         },
         dialogParticipate: function (val) {
           if (!val) {
-            this.editedItem = this.defaultItem
-            this.editedItem.date = null
+            Object.assign(this.editedItem, this.defaultItem);
           }
         },
         dialogDelete: function (val) {
           if (!val) {
-            this.editedItem = this.defaultItem
-            this.editedItem.date = null
+            Object.assign(this.editedItem, this.defaultItem);
             this.$refs.form.resetValidation()
           }
         },
@@ -545,7 +542,7 @@
         },
         editItem (item) {
           this.editFlg = true
-          this.editedItem = item
+          Object.assign(this.editedItem, item);
           this.dialogForm = true
         },
         async save () {
@@ -578,7 +575,7 @@
           }
         },
         deleteItem (item) {
-          this.editedItem = item
+          Object.assign(this.editedItem, item);
           this.dialogDelete = true
         },
         async confirmDelete () {
@@ -588,7 +585,7 @@
             })
         },
         participate (item) {
-          this.editedItem = item
+          Object.assign(this.editedItem, item);
           this.dialogParticipate = true
         },
         async confirmParticipate () {
