@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\EventFilesController;
 use App\Http\Controllers\ParticipationsController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/test1', function () {
+    return view('tests.test1');
+});
+
+Route::post('/test1', function (Request $request) {
+    return dump(strlen($request->fieldTextarea));
 });
 
 Route::get('/dashboard', function () {
